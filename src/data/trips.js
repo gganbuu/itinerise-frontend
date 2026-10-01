@@ -24,8 +24,19 @@ export function createTrip(tripDetails) {
         id: crypto.randomUUID(),
         createdAt: new Date().toISOString(),
         ...tripDetails,
+        activities: [],
     };
 
     writeTrips([...readTrips(), newTrip]);
     return newTrip;
+}
+
+export function createActivity(activityDetails) {
+    const newActivity = {
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        ...activityDetails
+    };
+
+
 }

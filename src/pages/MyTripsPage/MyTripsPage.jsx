@@ -23,8 +23,9 @@ const MyTripsPage = () => {
   }
 
   // temporary trips parser
-  const trips = JSON.parse(localStorage.trips)
- 
+  const tripsJSON = localStorage.trips ?? `{"undefined": true}`;
+  const tripsList = JSON.parse(tripsJSON)
+  
 
   return (
     <div className={styles.myTripsContainer}>
@@ -48,7 +49,7 @@ const MyTripsPage = () => {
 
         <TripCardsContainer>
           <NewTripCard onClick={() => toggleModal()}/>
-          {trips.map(trip => <TripCard trip={trip}/>)}
+          {!tripsList.undefined && tripsList.map(trip => <TripCard key={trip.id} trip={trip}/>)}
         </TripCardsContainer>
         
         {modalState && (<NewTripModal onClose={toggleModal}/>)}

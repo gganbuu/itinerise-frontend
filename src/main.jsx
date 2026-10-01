@@ -23,6 +23,7 @@ const router = createBrowserRouter([
     path: "/trip/:tripId",
     Component: TripPage,
     loader: tripLoader,
+    // action: newActivityAction
   },
 ]);
 

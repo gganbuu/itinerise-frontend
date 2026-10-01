@@ -76,7 +76,3 @@ const TripPage = () => {
 }
 
 export default TripPage
-
-        {/* <h1>{trip.name}</h1>
-        <p>{trip.destination}</p>
-        <p>{trip.startDate} - {trip.endDate}</p> */}

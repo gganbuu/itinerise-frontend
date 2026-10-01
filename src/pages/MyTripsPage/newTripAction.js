@@ -13,5 +13,5 @@ export async function newTripAction({ request }) {
 
     const newTrip = createTrip(tripDetails);
 
-    return redirect(`/trips/${newTrip.id}`);
+    return redirect(`/trip/${newTrip.id}`);
 }

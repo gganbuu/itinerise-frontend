@@ -26,7 +26,7 @@ const NewActivityModal = ({onClose}) => {
                     </label>
                     <div className={styles.twoColumn}>
                         <label className={styles.modalLabel} htmlFor="activityCategory">Category
-                            <TextInput id="activityCategory" name="Category" placeholder="Food" />
+                            <TextInput id="activityCategory" name="category" placeholder="Food" />
                         </label>
                         <label className={styles.modalLabel} htmlFor="activityDestination">Location
                             <TextInput id="activityDestination" name="destination" placeholder="Timbuktoo" />

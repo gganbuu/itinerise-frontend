@@ -28,7 +28,7 @@ const TripCard = ({trip}) => {
   const days = daysBetween(start, end) + 1
 
   return (
-    <Link to={`/trip/${trip.id}`} class={styles.linkWrap}>
+    <Link to={`/trip/${trip.id}`} className={styles.linkWrap}>
       <article className={styles.tripCard}>
         <div className={styles.tripRoute}>
           <img src={shapes} alt="" className={styles.routeLine}/>
