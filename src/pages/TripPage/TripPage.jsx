@@ -9,12 +9,13 @@ import { useState } from 'react';
 import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
 
 const TripPage = () => {
-  const trip = useLoaderData();
   const [modalState, setModalState] = useState(false)
 
   const toggleModal = () => {
     setModalState(!modalState)
   }
+
+  const trip = useLoaderData()
   
   return (
     <div className={styles.tripPageWrapper}>

@@ -12,7 +12,7 @@ const NewTripModal = ({onClose}) => {
     const isSubmitting = navigation.state === "submitting";
     
     return (
-        <Form method="post" className={styles.newTripModal}>
+        <Form method="POST" className={styles.newTripModal}>
             <div className={styles.newTripContainer}>
                 <header>
                     <div className={styles.newTripTitleAndButton}>

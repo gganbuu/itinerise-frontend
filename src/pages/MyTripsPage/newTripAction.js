@@ -1,17 +1,20 @@
-import { redirect } from "react-router";
-import { createTrip } from "../../data/trips"
+import { redirect} from "react-router";
 
 export async function newTripAction({ request }) {
-    const formData = await request.formData();
+    const body = await request.formData()
+    const newTripDetails = Object.fromEntries(body)
 
-    const tripDetails = {
-        name: formData.get("name"),
-        destination: formData.get("destination"),
-        startDate: formData.get("startDate"),
-        endDate: formData.get("endDate"),
+    const res = await fetch('/api/mytrips/newtrip', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newTripDetails),
+        credentials: 'include'
+    })
+
+    if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        return data ?? {errors: [{message: 'Something went wrong, please try again'}]}
     }
 
-    const newTrip = createTrip(tripDetails);
-
-    return redirect(`/trip/${newTrip.id}`);
+    return redirect('/')
 }

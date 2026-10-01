@@ -10,13 +10,16 @@ import '@fontsource-variable/nunito/wght.css';
 
 import MyTripsPage from './pages/MyTripsPage/MyTripsPage';
 import TripPage from './pages/TripPage/TripPage';
-import { newTripAction } from './pages/MyTripsPage/newTripAction';
+import myTripsLoader from './pages/MyTripsPage/myTripsLoader'
+
 import { tripLoader } from './pages/TripPage/tripLoader';
+import { newTripAction } from './pages/MyTripsPage/newTripAction';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MyTripsPage,
+    loader: myTripsLoader,
     action: newTripAction,
   },
   {

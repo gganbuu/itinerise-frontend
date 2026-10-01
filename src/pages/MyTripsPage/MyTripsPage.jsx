@@ -14,17 +14,17 @@ import { Logo } from '../../components/Logo/Logo'
 
 import { Link } from 'react-router'
 import { useState } from 'react'
-
+import { useLoaderData } from 'react-router'
 
 const MyTripsPage = () => {
+  const trips = useLoaderData()
+  
+
   const [modalState, setModalState] = useState(false)
   const toggleModal = () => {
     setModalState(!modalState)
   }
 
-  // temporary trips parser
-  const tripsJSON = localStorage.trips ?? `{"undefined": true}`;
-  const tripsList = JSON.parse(tripsJSON)
   
 
   return (
@@ -49,7 +49,7 @@ const MyTripsPage = () => {
 
         <TripCardsContainer>
           <NewTripCard onClick={() => toggleModal()}/>
-          {!tripsList.undefined && tripsList.map(trip => <TripCard key={trip.id} trip={trip}/>)}
+          {trips?.length && trips.map(trip => <TripCard key={trip.id} trip={trip}/>)}
         </TripCardsContainer>
         
         {modalState && (<NewTripModal onClose={toggleModal}/>)}

@@ -1,12 +1,5 @@
-import { data } from "react-router";
-import { getTrip } from "../../data/trips";
-
 export async function tripLoader({params}) {
-    const trip = getTrip(params.tripId);
-
-    if (!trip) {
-        throw data("Trip not found", {status: 404})
-    }
-
-    return trip;
+    const id = params.tripId;
+    const res = await fetch(`/api/mytrips/${id}`);
+    return res;
 }
