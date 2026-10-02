@@ -14,6 +14,7 @@ import myTripsLoader from './pages/MyTripsPage/myTripsLoader'
 
 import { tripLoader } from './pages/TripPage/tripLoader';
 import { newTripAction } from './pages/MyTripsPage/newTripAction';
+import { newActivityAction } from './pages/TripPage/newActivityAction';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
     path: "/trip/:tripId",
     Component: TripPage,
     loader: tripLoader,
-    // action: newActivityAction
+    action: newActivityAction
   },
 ]);
 

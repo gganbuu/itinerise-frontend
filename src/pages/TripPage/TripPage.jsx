@@ -14,7 +14,7 @@ const TripPage = () => {
   const toggleModal = () => {
     setModalState(!modalState)
   }
-  const trip = useLoaderData();
+  const {acitivity, trip } = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate);
 
 

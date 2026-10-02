@@ -1,5 +1,9 @@
-export async function tripLoader({params}) {
+export async function tripLoader({ params }) {
     const id = params.tripId;
-    const res = await fetch(`/api/mytrips/${id}`);
-    return res;
+    const [tripRes, activitiesRes] = await Promise.all([
+        fetch(`/api/trip/${id}`),
+        fetch(`/api/trip/${id}/allactivities`),
+    ]);
+    if (!tripRes.ok) throw new Response("Trip not found", { status: tripRes.status });
+    return { trip: await tripRes.json(), activities: await activitiesRes.json() };
 }
