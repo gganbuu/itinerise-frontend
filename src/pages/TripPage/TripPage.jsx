@@ -1,4 +1,3 @@
-import React from 'react'
 import { useLoaderData, Link } from 'react-router'
 import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
@@ -7,15 +6,18 @@ import FooterBar from '../../components/FooterBar/FooterBar';
 import PageButton from '../../components/PageButton/PageButton';
 import { useState } from 'react';
 import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
+import getDaysFromTrip from '../../utils/getDaysFromTrip';
+import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 
 const TripPage = () => {
   const [modalState, setModalState] = useState(false)
-
   const toggleModal = () => {
     setModalState(!modalState)
   }
+  const trip = useLoaderData();
+  const dates = getDaysFromTrip(trip.startDate, trip.endDate);
 
-  const trip = useLoaderData()
+
   
   return (
     <div className={styles.tripPageWrapper}>
@@ -52,17 +54,8 @@ const TripPage = () => {
           </aside>
 
           <aside className={styles.calendarContainer}>
-            {/* <p className={styles.containerSubtitle}>CALENDAR</p> */}
             <div className={styles.calendarGrid}>
-
-              <div className={styles.calendarColumn}>
-                <div className={styles.calendarDayHeading}>
-                  <p>MON</p>
-                  <h4>24</h4>
-                </div>
-                <div className={styles.timeColumn}>
-                </div>
-              </div>
+              {dates.map(date => <CalendarColumn key={date} date={date}/>)}
             </div>
           </aside>
         </main>
