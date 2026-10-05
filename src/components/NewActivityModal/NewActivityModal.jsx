@@ -7,8 +7,6 @@ import DateInput from "../DateInput/DateInput"
 
 
 const NewActivityModal = ({onClose}) => {
-    const navigation = useNavigation();
-    const isSubmitting = navigation.state === "submitting";
     
     return (
         <Form method="post" className={styles.newTripModal}>
@@ -49,7 +47,9 @@ const NewActivityModal = ({onClose}) => {
                 <footer>
                     <SecondaryButton name="Cancel" onClick={onClose} />
                     <PageButton type="submit" 
-                                name={isSubmitting ? "Creating...": "Create Activity"}/>
+                                name="Submit"
+                                intent={true}
+                                value="newActivityAction"/>
                 </footer>
             </div>
         </Form>

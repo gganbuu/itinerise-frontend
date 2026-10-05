@@ -14,8 +14,9 @@ const TripPage = () => {
   const toggleModal = () => {
     setModalState(!modalState)
   }
-  const {acitivity, trip } = useLoaderData();
+  const trip = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate);
+  const activities = trip.activities;
 
 
   
@@ -50,6 +51,7 @@ const TripPage = () => {
             </div>
             <div className={styles.container}>
               <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
+              {activities.map(activity => <p key={activity.id}>{activity.name}</p>)}
             </div>
           </aside>
 
