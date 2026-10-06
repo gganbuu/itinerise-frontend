@@ -1,79 +1,96 @@
+// react
+import { useState } from 'react';
+// libraries
 import { useLoaderData, Link } from 'react-router'
+import { useDroppable, DragDropProvider } from '@dnd-kit/react';
+// components
 import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import { Logo } from '../../components/Logo/Logo';
 import FooterBar from '../../components/FooterBar/FooterBar';
 import PageButton from '../../components/PageButton/PageButton';
-import { useState } from 'react';
 import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
-import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
-import Activity from '../../components/Activity/Activity';
-import { useDroppable, DragDropProvider } from '@dnd-kit/react';
+import ActivityBank from '../../components/ActivityBank/ActivityBank';
+
+
+//utility functions
+import getDaysFromTrip from '../../utils/getDaysFromTrip';
+import { isValidDate } from '../../utils/isValidDate';
+import { toShortDate } from '../../utils/toShortDate';
 
 
 const TripPage = () => {
   const [modalState, setModalState] = useState(false)
-  const toggleModal = () => {
-    setModalState(!modalState)
-  }
+  const toggleModal = () => { setModalState(!modalState)}
+  
+  const [activityPlacements, setActivityPlacements] = useState({});
+  const [isDropped, setIsDropped] = useState(false);
 
   const trip = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate);
   const activities = trip.activities;
-
-  const { activityBankRef } = useDroppable({
-    id: 'activityBank'
-  })
   
   return (
-    <div className={styles.tripPageWrapper}>
-      <NavBar>
-        <div className={styles.navLinks}>
-          <Link className={styles.logoLink} to="/"><Logo/></Link>
-          <Link>Calendar</Link>
-          <Link>Budget</Link>
-          <Link>Map</Link>
-        </div>
+    <DragDropProvider onDragEnd={(e) => {
+        if (e.canceled) return;
+        const { source, target } = e.operation;
+        if (!target) return;
 
-        <div className={styles.profileAndShare}>
-
-        </div>
-      </NavBar>
-
-      <main className={styles.tripPageMain}>
+        if (target.id === 'activityBank' || isValidDate(target.id)) {
+          setActivityPlacements(prev => ({...prev, [source.id]: target.id}));
+        }
         
-        <header className={styles.headingAndButton}>
-          <h2>{trip.name}</h2>
-          <button>Week</button>
-        </header>
+        setIsDropped(target?.id == 'activityBank' || isValidDate(target?.id));
+      }}>
+        
+      <div className={styles.tripPageWrapper}>
+        <NavBar>
+          <div className={styles.navLinks}>
+            <Link className={styles.logoLink} to="/"><Logo/></Link>
+            <Link>Calendar</Link>
+            <Link>Budget</Link>
+            <Link>Map</Link>
+          </div>
 
-        <main className={styles.bubblesContainer}>
+          <div className={styles.profileAndShare}>
 
-          <aside className={styles.sideBar}>
-            <PageButton name="New Activity" onClick={toggleModal}/>
-            <div className={styles.container}>
-              <p className={styles.containerSubtitle}>CATEGORIES</p>
-            </div>
-            <div className={styles.container} ref={activityBankRef}>
-              <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
-              {activities.map(activity => <Activity key={activity.id} activity={activity}/>)}
-            </div>
-          </aside>
+          </div>
+        </NavBar>
 
-          <aside className={styles.calendarContainer}>
-            <div className={styles.calendarGrid}>
-              {dates.map(date => <CalendarColumn key={date} date={date}/>)}
-            </div>
-          </aside>
+        <main className={styles.tripPageMain}>
+          
+          <header className={styles.headingAndButton}>
+            <h2>{trip.name}</h2>
+            <button>Week</button>
+          </header>
+
+          <main className={styles.bubblesContainer}>
+
+            <aside className={styles.sideBar}>
+              <PageButton name="New Activity" onClick={toggleModal}/>
+              <div className={styles.container}>
+                <p className={styles.containerSubtitle}>CATEGORIES</p>
+              </div>
+              <ActivityBank activities={activities} activityPlacements={activityPlacements}/>
+            </aside>
+
+            <aside className={styles.calendarContainer}>
+              <div className={styles.calendarGrid}>
+                {dates.map(date => <CalendarColumn key={date} 
+                                                   date={date}
+                                                   activities={activities.filter(a => activityPlacements[a.id] === toShortDate(date))}/>)}
+              </div>
+            </aside>
+          </main>
+
         </main>
 
-      </main>
+        {modalState && (<NewActivityModal onClose={toggleModal}/>)}
 
-      {modalState && (<NewActivityModal onClose={toggleModal}/>)}
-
-      <FooterBar/>
-    </div>
+        <FooterBar/>
+      </div>
+    </DragDropProvider>
   )
 }
 
