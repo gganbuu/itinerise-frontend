@@ -1,0 +1,14 @@
+.activityContainer {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--blue-200);
+    border: 1px solid var(--blue-400);
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.activityDescription { 
+    font-weight: var(--body-m);
+}

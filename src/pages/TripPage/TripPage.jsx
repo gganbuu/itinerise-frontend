@@ -8,17 +8,23 @@ import { useState } from 'react';
 import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
+import Activity from '../../components/Activity/Activity';
+import { useDroppable, DragDropProvider } from '@dnd-kit/react';
+
 
 const TripPage = () => {
   const [modalState, setModalState] = useState(false)
   const toggleModal = () => {
     setModalState(!modalState)
   }
+
   const trip = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate);
   const activities = trip.activities;
 
-
+  const { activityBankRef } = useDroppable({
+    id: 'activityBank'
+  })
   
   return (
     <div className={styles.tripPageWrapper}>
@@ -49,9 +55,9 @@ const TripPage = () => {
             <div className={styles.container}>
               <p className={styles.containerSubtitle}>CATEGORIES</p>
             </div>
-            <div className={styles.container}>
+            <div className={styles.container} ref={activityBankRef}>
               <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
-              {activities.map(activity => <p key={activity.id}>{activity.name}</p>)}
+              {activities.map(activity => <Activity key={activity.id} activity={activity}/>)}
             </div>
           </aside>
 
