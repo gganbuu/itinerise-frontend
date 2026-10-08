@@ -7,6 +7,9 @@
     border-radius: 5px;
     font-size: 12px;
     padding: 4px 8px;
+
+    overflow: hidden;
+    min-height: 0;
 }
 
 .activityDescription { 
