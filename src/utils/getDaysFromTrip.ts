@@ -1,5 +1,5 @@
 import { Temporal } from "temporal-polyfill";
-
+// accepts yyyy-mm-dd or full ISO string
 export default function getDaysFromTrip(startDate: string, endDate: string): Temporal.PlainDate[] {
     const days: Temporal.PlainDate[] = [];
     const startDateSliced = startDate.slice(0,10)

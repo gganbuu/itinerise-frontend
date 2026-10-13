@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './CalendarColumn.module.css'
-import { getWeekDay } from '../../utils/getWeekDay.ts'
 import { useDroppable } from '@dnd-kit/react'
 import Activity from '../Activity/Activity'
 import CalendarTimeSlot from '../CalendarTimeSlot/CalendarTimeSlot'
@@ -9,7 +8,7 @@ import { Temporal } from 'temporal-polyfill'
 
 const CalendarColumn = ({date, activities}) => {
     const temporalDate = Temporal.PlainDate.from(date)
-    const dayOfTheWeek = getWeekDay(temporalDate.dayOfWeek).slice(0, 3)
+    const dayOfTheWeek = temporalDate.toLocaleString('en-US', { weekday: 'short' })
     const shortDate = temporalDate.toString()
     // console.log(activities)
 
