@@ -1,8 +1,7 @@
-import { toLocalDate } from "./toLocalDate";
 import { Temporal } from "temporal-polyfill";
 
-export default function getDaysFromTrip(startDate, endDate) {
-    const days = [];
+export default function getDaysFromTrip(startDate: string, endDate: string): Temporal.PlainDate[] {
+    const days: Temporal.PlainDate[] = [];
     const startDateSliced = startDate.slice(0,10)
     const endDateSliced = endDate.slice(0,10)
 
