@@ -28,11 +28,15 @@ const TripPage = () => {
   const trip = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
 
-  
-  const pendingMoves = Object.fromEntries(
-    fetchers.filter(f => f.formData?.get('intent') === 'moveActivity')
-            .map(f => [f.formData.get('activityId'), f.formData.get('startTime') || null])
-  )
+  const getPendingMoves = () => {
+    // get all moveactivity requests that are inflight
+    const moveActivityRequests = fetchers.filter(req => req.formData?.get('intent') === 'moveActivity')
+    // map moveactivity requests to [activityId, startTime]
+    const activityTimeArrayValues = moveActivityRequests.map(f => [f.formData.get('activityId'), f.formData.get('startTime') || null])
+    // turn array values into keyvalues
+    return Object.fromEntries(activityTimeArrayValues)
+  }
+  const pendingMoves = getPendingMoves()
 
   const activities = trip.activities.map(a => 
     String(a.id) in pendingMoves ? { ...a, startTime: pendingMoves[a.id]} : a
