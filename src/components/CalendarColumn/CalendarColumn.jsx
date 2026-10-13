@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './CalendarColumn.module.css'
 import { toShortDate } from '../../utils/toShortDate'
-import { getWeekDay } from '../../utils/getWeekDay'
+import { getWeekDay } from '../../utils/getWeekDay.ts'
 import { useDroppable } from '@dnd-kit/react'
 import Activity from '../Activity/Activity'
 import CalendarTimeSlot from '../CalendarTimeSlot/CalendarTimeSlot'

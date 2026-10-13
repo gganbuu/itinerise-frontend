@@ -19,9 +19,9 @@ export function timesOverlappping_temporal(startTime, durationMinutes, currentTi
     const endDateTime = Temporal.PlainDateTime.from(startTime).add({minutes: durationMinutes})
     const currentDateTime = Temporal.PlainDateTime.from(currentTime)
 
-    console.log(`start time; ${startDateTime}`)
-    console.log(`end time; ${endDateTime}`)
-    console.log(`current time; ${currentDateTime}`)
+    // console.log(`start time; ${startDateTime}`)
+    // console.log(`end time; ${endDateTime}`)
+    // console.log(`current time; ${currentDateTime}`)
 
     const currentDateAfter = Temporal.PlainDateTime.compare(currentDateTime, startDateTime)
     const currentDateBefore = Temporal.PlainDateTime.compare(endDateTime, currentDateTime)
