@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './TripCard.module.css'
 import shapes from '../../assets/Shapes.svg'
 import { Link } from 'react-router'
-import { toLocalDate } from '../../utils/toLocalDate.ts'
+import { toLocalDate } from '../../utils/toLocalDate'
 
 
 const dayInMs = 1000 * 60 * 60 * 24

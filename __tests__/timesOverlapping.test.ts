@@ -1,4 +1,4 @@
-import { timesOverlappping_temporal as timesOverlapping} from "../src/utils/timesOverlapping";
+import { timesOverlapping} from "../src/utils/timesOverlapping";
 
 describe("times overlapping test cases", () => {
     test("times overlapping true", () => {
