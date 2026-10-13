@@ -14,7 +14,7 @@ import { Temporal } from "temporal-polyfill";
 //     return currentDate > startDate && currentDate < endDate;
 // }
 
-export function timesOverlappping_temporal(startTime, durationMinutes, currentTime) {
+export function timesOverlappping_temporal(startTime: string, durationMinutes: number, currentTime: string): boolean {
     const startDateTime = Temporal.PlainDateTime.from(startTime)
     const endDateTime = Temporal.PlainDateTime.from(startTime).add({minutes: durationMinutes})
     const currentDateTime = Temporal.PlainDateTime.from(currentTime)
