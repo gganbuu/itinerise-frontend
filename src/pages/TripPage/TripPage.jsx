@@ -3,6 +3,7 @@ import { useState } from 'react';
 // libraries
 import { useLoaderData, Link, useSubmit, useFetchers } from 'react-router'
 import { DragDropProvider } from '@dnd-kit/react';
+import { Temporal } from 'temporal-polyfill';
 // components
 import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
@@ -24,9 +25,9 @@ const TripPage = () => {
   const submit = useSubmit() // submit hook for submitting data without form 
   const fetchers = useFetchers() // for exposing requests that are still in flight (optimistic loading)
   
-
   const trip = useLoaderData();
-  const dates = getDaysFromTrip(trip.startDate, trip.endDate);
+  const dates = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
+
   
   const pendingMoves = Object.fromEntries(
     fetchers.filter(f => f.formData?.get('intent') === 'moveActivity')
@@ -38,13 +39,17 @@ const TripPage = () => {
   )
   
   // gets all banked activites by checking if activity has a starttime
-  const banked = activities.filter(a => !a.startTime)
+  const activitiesBanked = activities.filter(a => !a.startTime)
   
   // gets all activites on a specific date, checking if:
   // - activity has a start time 
   // - a.startTime is the same date as date.to datestring
-  const activitiesOn = (date) => activities.filter(a =>
-    a.startTime && new Date(a.startTime).toDateString() === date.toDateString())
+  const activitiesCalendared = (date) => activities.filter(a => {
+    if (a.startTime == null) return false
+    const activityDate = Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate();
+    return activityDate.equals(date);
+  })
+
 
   const handleDragEnd = (e) => {
         try {
@@ -67,9 +72,14 @@ const TripPage = () => {
           
           // check if the target's type is a timeslot
           else if (target.type === 'timeSlot') {
-            const newDate = new Date(target.data.date)
-            newDate.setMinutes(target.data.startMinutes)
-            startTime = newDate.toISOString()
+
+            // check if the time overlaps with any activities and early return if it does 
+            // **
+            // ** 
+
+            const newDate = target.data.temporalDate
+            const newDateTime = Temporal.PlainDateTime.from(newDate).add({minutes: target.data.startMinutes})
+            startTime = newDateTime.toZonedDateTime('UTC').toInstant().toString()
           } 
           // early return if types / id doesn't match any codnitions
           else {
@@ -117,14 +127,14 @@ const TripPage = () => {
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
               </div>
-              <ActivityBank activities={banked}/>
+              <ActivityBank activities={activitiesBanked}/>
             </aside>
 
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
-                {dates.map(date => <CalendarColumn key={date} 
-                                                   date={date}
-                                                   activities={activitiesOn(date)}/>)}
+                {dates.map(date => <CalendarColumn key={date.toString()} 
+                                                   date={date.toString()}
+                                                   activities={activitiesCalendared(date)}/>)}
               </div>
             </aside>
           </main>

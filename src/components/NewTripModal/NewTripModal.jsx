@@ -5,11 +5,17 @@ import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
 import DateInput from "../DateInput/DateInput"
 import { newTripReducer, newTripInitialState } from "../../hooks/newTripReducer"
+import { useState } from "react"
 
 
 const NewTripModal = ({onClose}) => {
     const navigation = useNavigation();
+    const [tripStartDate, setTripStartDate] = useState('')
     const isSubmitting = navigation.state === "submitting";
+
+    const handleTripStartDate = (e) => {
+        setTripStartDate(e.target.value)
+    }
     
     return (
         <Form method="POST" className={styles.newTripModal}>
@@ -17,9 +23,9 @@ const NewTripModal = ({onClose}) => {
                 <header>
                     <div className={styles.newTripTitleAndButton}>
                         <h2>Plan a new trip</h2>
-                        <button onClick={onClose}>x</button>
+                        <button onClick={onClose} type="button">x</button>
                     </div>
-                    <p class={styles.newTripSubtitle}>add your vacation details here</p>
+                    <p className={styles.newTripSubtitle}>add your vacation details here</p>
                 </header>
                 <hr />
                 <main className={styles.newTripMain}> 
@@ -31,10 +37,10 @@ const NewTripModal = ({onClose}) => {
                     </label>
                     <div className={styles.dateLabel}>
                         <label className={styles.modalLabel} htmlFor="tripStartDate">Start Date
-                            <DateInput id="tripStartDate" name="startDate" required />
+                            <DateInput id="tripStartDate" name="startDate" required onChange={(e) => handleTripStartDate(e)}/>
                         </label>
                         <label className={styles.modalLabel} htmlFor="tripEndDate">End Date
-                            <DateInput id="tripEndDate" name="endDate" required/>
+                            <DateInput id="tripEndDate" name="endDate" required min={tripStartDate}/>
                         </label>
                     </div>
                 </main>

@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './TripCard.module.css'
 import shapes from '../../assets/Shapes.svg'
 import { Link } from 'react-router'
+import { toLocalDate } from '../../utils/toLocalDate'
+
 
 const dayInMs = 1000 * 60 * 60 * 24
 
@@ -23,8 +25,8 @@ const formatCountdown = (start, end) => {
 }
 
 const TripCard = ({trip}) => {
-  const start = new Date(trip.startDate)
-  const end = new Date(trip.endDate)
+  const start = toLocalDate(trip.startDate)
+  const end = toLocalDate(trip.endDate)
   const days = daysBetween(start, end) + 1
 
   return (

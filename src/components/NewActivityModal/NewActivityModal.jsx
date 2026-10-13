@@ -14,7 +14,7 @@ const NewActivityModal = ({onClose}) => {
                 <header>
                     <div className={styles.newTripTitleAndButton}>
                         <h2>New Activity</h2>
-                        <button onClick={onClose}>x</button>
+                        <button type="button" onClick={onClose}>x</button>
                     </div>
                 </header>
                 <hr />

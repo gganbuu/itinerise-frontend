@@ -4,6 +4,8 @@ export async function newTripAction({ request }) {
     const body = await request.formData()
     const newTripDetails = Object.fromEntries(body)
 
+    console.log(newTripDetails)
+
     const res = await fetch('/api/mytrips/newtrip', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
