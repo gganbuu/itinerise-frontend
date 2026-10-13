@@ -9,8 +9,12 @@ describe("test case 1", () => {
         const minutes = getStartMinutes('2026-10-11T06:36:00.000Z')
         expect(minutes).toBe(396)
     })
-    test("6:36AM invalid test", () => {
-        const minutes = getStartMinutes('2026-10-11T06:36:00.000Z')
-        expect(minutes).not.toBe(106)
+    test("12:00AM test", () => {
+        const minutes = getStartMinutes('2026-10-11T00:00:00.000Z')
+        expect(minutes).toBe(0)
+    })
+    test("11:45PM test", () => {
+        const minutes = getStartMinutes('2026-10-11T23:45:00.000Z')
+        expect(minutes).toBe(1425)
     })
 })
