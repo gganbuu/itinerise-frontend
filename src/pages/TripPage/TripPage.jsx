@@ -28,6 +28,8 @@ const TripPage = () => {
   const trip = useLoaderData();
   const dates = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
 
+
+  //optimistic ui
   const getPendingMoves = () => {
     // get all moveactivity requests that are inflight
     const moveActivityRequests = fetchers.filter(req => req.formData?.get('intent') === 'moveActivity')
@@ -78,7 +80,7 @@ const TripPage = () => {
           else if (target.type === 'timeSlot') {
 
             // check if the time overlaps with any activities and early return if it does 
-            // **
+            // 
             // ** 
 
             const newDate = target.data.temporalDate

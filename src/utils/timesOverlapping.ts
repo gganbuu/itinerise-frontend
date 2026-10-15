@@ -1,31 +1,19 @@
 import { Temporal } from "temporal-polyfill";
 
-// export default function timesOverlapping(startTime, durationMinutes, currentTime) {
-//     const startDate = new Date(startTime);
-//     const currentDate = new Date(currentTime);
-//     const endDate = new Date(startTime)
-//     endDate.setMinutes(endDate.getMinutes() + durationMinutes)
+export function timesOverlapping(
+    occupiedStartTime: string,
+    occupiedDurationMinutes: number,
+    currentStartTime: string,
+    currentDurationMinutes: number
+): boolean {
+    const occupiedStart = Temporal.Instant.from(occupiedStartTime)
+    const occupiedEnd = occupiedStart.add({ minutes: occupiedDurationMinutes })
+    const currentStart = Temporal.Instant.from(currentStartTime)
+    const currentEnd = currentStart.add({ minutes: currentDurationMinutes })
 
-//     console.log(`start time; ${startDate}`)
-//     console.log(`end time; ${endDate}`)
-//     console.log(`current time; ${currentDate}`)
+    // two time ranges overlap when each one starts before the other one ends
+    const currentStartsBeforeOccupiedEnds = Temporal.Instant.compare(currentStart, occupiedEnd) < 0
+    const occupiedStartsBeforeCurrentEnds = Temporal.Instant.compare(occupiedStart, currentEnd) < 0
 
-
-//     return currentDate > startDate && currentDate < endDate;
-// }
-
-export function timesOverlapping(startTime: string, durationMinutes: number, currentTime: string): boolean {
-    const startDateTime = Temporal.PlainDateTime.from(startTime)
-    const endDateTime = Temporal.PlainDateTime.from(startTime).add({minutes: durationMinutes})
-    const currentDateTime = Temporal.PlainDateTime.from(currentTime)
-
-    // console.log(`start time; ${startDateTime}`)
-    // console.log(`end time; ${endDateTime}`)
-    // console.log(`current time; ${currentDateTime}`)
-
-    const currentDateAfter = Temporal.PlainDateTime.compare(currentDateTime, startDateTime)
-    const currentDateBefore = Temporal.PlainDateTime.compare(endDateTime, currentDateTime)
-
-    return currentDateBefore == 1 && currentDateAfter == 1;
-
+    return currentStartsBeforeOccupiedEnds && occupiedStartsBeforeCurrentEnds
 }

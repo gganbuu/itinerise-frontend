@@ -1,25 +1,36 @@
 import { timesOverlapping} from "../src/utils/timesOverlapping";
 
 describe("times overlapping test cases", () => {
-    test("times overlapping true", () => {
-        const startDate = '2026-10-08T09:00:00';
-        const durationMinutes = 60;
-        const currentDate = '2026-10-08T09:30:00';
-        const check = timesOverlapping(startDate, durationMinutes, currentDate)
+    test("9:00-10:00 & 9:30-10:30", () => {
+        const occupiedStartDate = '2026-10-08T09:00:00Z';
+        const occupiedDurationMinutes = 60;
+        const currentStartDate = '2026-10-08T09:30:00Z';
+        const currentDurationMinutes = 60;
+        const check = timesOverlapping(occupiedStartDate, occupiedDurationMinutes, currentStartDate, currentDurationMinutes)
         expect(check).toBe(true)
     })
-    test("times overlapping", () => {
-        const startDate = '2026-10-08T09:00:00';
-        const durationMinutes = 60;
-        const currentDate = '2026-10-08T10:30:00';
-        const check = timesOverlapping(startDate, durationMinutes, currentDate)
+    test("09:00-10:00 & 10:30-11:30", () => {
+        const occupiedStartDate = '2026-10-08T09:00:00Z';
+        const occupiedDurationMinutes = 60;
+        const currentStartDate = '2026-10-08T10:30:00Z';
+        const currentDurationMinutes = 60;
+        const check = timesOverlapping(occupiedStartDate, occupiedDurationMinutes, currentStartDate, currentDurationMinutes)
         expect(check).toBe(false)
     })
-    test("times overlapping with string", () => {
-        const startDate = '2026-10-08T09:00:00';
-        const durationMinutes = 60;
-        const currentDate = '2026-10-08T10:30:00';
-        const check = timesOverlapping(startDate, durationMinutes, currentDate)
+    test("09:00-10:00 & 10:00-11:00", () => {
+        const occupiedStartDate = '2026-10-08T09:00:00Z';
+        const occupiedDurationMinutes = 60;
+        const currentStartDate = '2026-10-08T10:00:00Z';
+        const currentDurationMinutes = 60;
+        const check = timesOverlapping(occupiedStartDate, occupiedDurationMinutes, currentStartDate, currentDurationMinutes)
         expect(check).toBe(false)
+    })
+    test("20:00-21:00 & 19:00-21:00", () => {
+        const occupiedStartDate = '2026-10-08T20:00:00Z';
+        const occupiedDurationMinutes = 60;
+        const currentStartDate = '2026-10-08T19:00:00Z';
+        const currentDurationMinutes = 120;
+        const check = timesOverlapping(occupiedStartDate, occupiedDurationMinutes, currentStartDate, currentDurationMinutes)
+        expect(check).toBe(true)
     })
 })
