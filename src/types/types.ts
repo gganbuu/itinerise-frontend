@@ -23,3 +23,5 @@ export interface Trip {
 }
 
 export type TripSummary = Omit<Trip,"activities">;
+
+export type ActionErrors = { errors: { message: string }[] };
