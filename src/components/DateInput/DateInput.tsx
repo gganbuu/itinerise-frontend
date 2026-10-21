@@ -1,6 +1,16 @@
 import React from 'react'
+import { ChangeEventHandler } from 'react';
 
-const DateInput = ({id, name, required, min = "", onChange}) => {
+interface DateInputProps {
+  id: string,
+  name: string,
+  required?: boolean,
+  min?: string,
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+}
+
+
+const DateInput = ({id, name, required, min = "", onChange}: DateInputProps ) => {
   return (
     <input id={id}
            type="date"
