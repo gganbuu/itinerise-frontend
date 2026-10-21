@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './CalendarColumn.module.css'
 import { useDroppable } from '@dnd-kit/react'
-import Activity from '../Activity/Activity'
+import ActivityBlock from '../ActivityBlock/ActivityBlock'
 import CalendarTimeSlot from '../CalendarTimeSlot/CalendarTimeSlot'
 import { getStartMinutes } from '../../utils/getStartMinutes'
 import { Temporal } from 'temporal-polyfill'
@@ -25,7 +25,7 @@ const CalendarColumn = ({date, activities}) => {
                     const startRow = getStartMinutes(a.startTime) / 15 + 1
                     const span = Math.max(1, Math.ceil(a.durationMinutes / 15))
                     return (
-                        <Activity
+                        <ActivityBlock
                             key={a.id}
                             activity={a}
                             style={{ gridRow: `${startRow} / span ${span}`, gridColumn: 1, zIndex: 1}}
