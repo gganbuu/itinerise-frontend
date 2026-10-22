@@ -48,8 +48,7 @@ const NewActivityModal = ({onClose}) => {
                     <SecondaryButton name="Cancel" onClick={onClose} />
                     <PageButton type="submit" 
                                 name="Submit"
-                                intent={true}
-                                value="newActivityAction"/>
+                                intent="newActivityAction"/>
                 </footer>
             </div>
         </Form>
