@@ -8,7 +8,7 @@ interface FilterButtonProps {
 
 const FilterButton = ({onClick, name}: FilterButtonProps) => {
   return (
-    <button className={styles.filterButton} onClick={() => onClick}>
+    <button className={styles.filterButton} onClick={onClick}>
         <p>{name}</p>
     </button>
   )

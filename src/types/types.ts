@@ -9,7 +9,7 @@ export interface Activity {
     location: string;
     durationMinutes: number;
     startTime: IsoInstant | null; // null = in activity bank
-    cost: number | null;
+    cost: string | null; //string as API sends it as a string
     description: string | null;
 }
 
