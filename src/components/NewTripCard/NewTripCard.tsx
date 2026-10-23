@@ -1,7 +1,12 @@
-import React from 'react'
+import { MouseEventHandler } from 'react'
 import styles from './NewTripCard.module.css'
 
-const NewTripCard = ({onClick}) => {
+
+interface NewTripCardProps {
+  onClick: MouseEventHandler<HTMLButtonElement> 
+}
+
+const NewTripCard = ({onClick}: NewTripCardProps) => {
   return (
     <button className={styles.newTripCard} onClick={onClick}>
       <span className={styles.plusBadge}>
