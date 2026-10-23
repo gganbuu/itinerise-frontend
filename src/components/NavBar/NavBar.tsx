@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 import styles from './NavBar.module.css';
-import { Logo } from '../Logo/Logo';
-import { Link } from 'react-router';
 
-const NavBar = ({children}) => {
+interface NavBarProps {
+  children: React.ReactNode;
+}
+
+
+const NavBar = ({children}: NavBarProps) => {
   return (
     <header>
       <nav className={styles.navContainer}>
