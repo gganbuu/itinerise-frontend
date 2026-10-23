@@ -9,9 +9,11 @@ export interface Activity {
     location: string;
     durationMinutes: number;
     startTime: IsoInstant | null; // null = in activity bank
-    cost: string | null;
+    cost: number | null;
     description: string | null;
 }
+
+export type ScheduledActivity = Activity & { startTime: IsoInstant };
 
 export interface Trip {
     id: number;

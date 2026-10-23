@@ -14,9 +14,9 @@ import NewActivityModal from '../../components/NewActivityModal/NewActivityModal
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 
-
 //utility functions
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
+import { isScheduled } from "../../utils/isScheduled"
 
 
 const TripPage = () => {
@@ -50,11 +50,9 @@ const TripPage = () => {
   // gets all activites on a specific date, checking if:
   // - activity has a start time 
   // - a.startTime is the same date as date.to datestring
-  const activitiesCalendared = (date) => activities.filter(a => {
-    if (a.startTime == null) return false
-    const activityDate = Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate();
-    return activityDate.equals(date);
-  })
+  const activitiesCalendared = (date) => activities
+        .filter(isScheduled)
+        .filter(a => Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate().equals(date));
 
 
   const handleDragEnd = (e) => {
@@ -78,12 +76,12 @@ const TripPage = () => {
           
           // check if the target's type is a timeslot
           else if (target.type === 'timeSlot') {
-
+            // const { date, startMinutes } = target.data as TimeSlotData
             // check if the time overlaps with any activities and early return if it does 
             // 
             // ** 
 
-            const newDate = target.data.temporalDate
+            const newDate = target.data.date
             const newDateTime = Temporal.PlainDateTime.from(newDate).add({minutes: target.data.startMinutes})
             startTime = newDateTime.toZonedDateTime('UTC').toInstant().toString()
           } 
@@ -139,7 +137,8 @@ const TripPage = () => {
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
                 {dates.map(date => <CalendarColumn key={date.toString()} 
-                                                   date={date.toString()}
+                                                  //  date={date.toString()}
+                                                  date={date}
                                                    activities={activitiesCalendared(date)}/>)}
               </div>
             </aside>
