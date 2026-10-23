@@ -1,6 +1,11 @@
 import React from 'react'
 import styles from './FilterBar.module.css'
-const FilterBar = ({children}) => {
+
+interface FilterBarProps {
+  children: React.ReactNode;
+}
+
+const FilterBar = ({children}: FilterBarProps) => {
   
   return (
     <div className={styles.filterBar}>{children}</div>
