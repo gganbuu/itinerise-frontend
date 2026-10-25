@@ -16,27 +16,32 @@ export async function newTripPageAction({request, params}: ActionFunctionArgs): 
             return await moveActivityAction(formData, tripId)
         }
         default: 
-            throw new Response(`Unknown intent: ${intent}`, { status: 404})
+            throw new Response(`Unknown intent: ${intent}`, { status: 400})
 
     }
 }
 
 async function newActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | null>  {
-        const newActivityDetails = Object.fromEntries(formData)
-        const res = await fetch(`/api/trip/${tripId}/newactivity`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newActivityDetails),
-            credentials: 'include'
-        })
+    const newActivityDetails = Object.fromEntries(formData)
+    const res = await fetch(`/api/trip/${tripId}/newactivity`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newActivityDetails),
+        credentials: 'include'
+    })
 
-        if (!res.ok) return { errors: [{ message: 'Something went wrong, please try again'}]}
-        return null
+    if (!res.ok) return { errors: [{ message: 'Something went wrong, please try again'}]}
+    return null
 }
 
 async function moveActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | null>  {
     const activityId = formData.get("activityId")
-    const startTime = formData.get("startTime") || null
+    const rawStartTime = formData.get("startTime")
+    const startTime = typeof rawStartTime === "string" && rawStartTime !== "" ? rawStartTime : null
+
+    //check if activityId is not null
+    if (typeof activityId !== 'string') return { errors: [{message: 'Could move activity'}]}
+
 
     const res = await fetch(`/api/trip/${tripId}/settime/${activityId}`, {
         method: 'PATCH',
