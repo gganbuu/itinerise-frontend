@@ -22,7 +22,7 @@ export async function newTripAction({ request }: ActionFunctionArgs): Promise<Ac
         typeof startDate !== "string" || 
         typeof endDate !== "string" 
     ) return { 
-        errors: [{ message: "Please fill all fields"}] 
+        errors: [{ message: "Please fill all fields."}] 
     }
 
     //check the start and end date
@@ -30,10 +30,10 @@ export async function newTripAction({ request }: ActionFunctionArgs): Promise<Ac
     const end = parsePlainDate(endDate)
 
     if (!start || !end) {
-        return { errors: [{ message: "Please enter valid dates" }] }
+        return { errors: [{ message: "Please enter valid dates." }] }
     }
     if (Temporal.PlainDate.compare(end, start) < 0) {
-        return { errors: [{ message: "End date can't be before the start date" }] }
+        return { errors: [{ message: "End date cannot be before the start date." }] }
     }
 
 
@@ -41,7 +41,7 @@ export async function newTripAction({ request }: ActionFunctionArgs): Promise<Ac
     const res = await fetch('/api/mytrips/newtrip', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name: name, destination: destination, startDate: startDate, endDate: endDate}),
+        body: JSON.stringify({name: name, destination: destination, startDate: start.toString(), endDate: end.toString()}),
         credentials: 'include'
     })
 
