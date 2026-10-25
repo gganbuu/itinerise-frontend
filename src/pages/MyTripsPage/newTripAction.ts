@@ -14,7 +14,6 @@ export async function newTripAction({ request }: ActionFunctionArgs): Promise<Ac
     const startDate = formData.get("startDate")
     const endDate = formData.get("endDate")
 
-    console.log(name)
 
     // check the types of formData gets
     if (
