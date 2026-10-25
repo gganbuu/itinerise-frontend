@@ -1,19 +1,19 @@
-import React from 'react'
 import styles from './CalendarTimeSlot.module.css'
 import { useDroppable } from '@dnd-kit/react'
 import type { Temporal } from 'temporal-polyfill'
+import type { TimeSlotData } from '../../types/types'
 
-
-export interface TimeSlotData {
+interface CalendarTimeSlotProps {
     date: Temporal.PlainDate;
     startMinutes: number;
 }
 
-const CalendarTimeSlot = ({date, startMinutes}: TimeSlotData) => {
+const CalendarTimeSlot = ({date, startMinutes}: CalendarTimeSlotProps) => {
+    const data: TimeSlotData = { date, startMinutes }
     const { ref } = useDroppable({
         id: `${date.toString()}-${startMinutes}`,
         type: 'timeSlot',
-        data: { date, startMinutes }
+        data
     })
 
     return (

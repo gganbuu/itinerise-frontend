@@ -1,3 +1,5 @@
+import type { Temporal } from "temporal-polyfill";
+
 /* ISO instant from the API, always UTC, e.g. "2026-10-08T09:00:00.000Z*/
 export type IsoInstant = string;
 
@@ -27,3 +29,8 @@ export interface Trip {
 export type TripSummary = Omit<Trip,"activities">;
 
 export type ActionErrors = { errors: { message: string }[] };
+
+export interface TimeSlotData {
+    date: Temporal.PlainDate;
+    startMinutes: number;
+}
