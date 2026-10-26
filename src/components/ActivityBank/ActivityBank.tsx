@@ -1,9 +1,13 @@
-import React from 'react'
 import ActivityBlock from '../ActivityBlock/ActivityBlock'
 import { useDroppable } from '@dnd-kit/react'
 import styles from './ActivityBank.module.css'
+import type { Activity } from '../../types/types'
 
-const ActivityBank = ({activities}) => {
+interface ActivityBankProps {
+    activities: Activity[];
+}
+
+const ActivityBank = ({activities}: ActivityBankProps) => {
     const { ref } = useDroppable({id: 'activityBank'})
     return (
         <div className={styles.container} ref={ref}>
