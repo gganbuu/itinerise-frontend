@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import styles from './ActivityBlock.module.css'
 import { useDraggable } from '@dnd-kit/react'
 import type { Activity } from '../../types/types'

@@ -49,7 +49,7 @@ const MyTripsPage = () => {
 
         <TripCardsContainer>
           <NewTripCard onClick={() => toggleModal()}/>
-          {trips?.length && trips.map(trip => <TripCard key={trip.id} trip={trip}/>)}
+          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip}/>)}
         </TripCardsContainer>
         
         {modalState && (<NewTripModal onClose={toggleModal}/>)}
