@@ -1,8 +1,12 @@
-import React from 'react'
 import styles from './TripCardsContainer.module.css'
-import TripCard from '../TripCard/TripCard'
+import type { ReactNode } from 'react'
 
-const TripCardsContainer = ({children}) => {
+
+interface TripCardsContainerProps {
+  children?: ReactNode
+}
+
+const TripCardsContainer = ({children}: TripCardsContainerProps) => {
   return (
     <div className={styles.tripCardsContainer}>
         {children}
