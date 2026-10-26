@@ -1,8 +1,8 @@
-import React from 'react'
+import type { ReactNode } from 'react';
 import styles from './FilterBar.module.css'
 
 interface FilterBarProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const FilterBar = ({children}: FilterBarProps) => {

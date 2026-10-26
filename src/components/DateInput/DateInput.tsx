@@ -1,5 +1,4 @@
-import React from 'react'
-import { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler } from 'react';
 
 interface DateInputProps {
   id: string,

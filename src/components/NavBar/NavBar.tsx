@@ -1,8 +1,8 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import styles from './NavBar.module.css';
 
 interface NavBarProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 
