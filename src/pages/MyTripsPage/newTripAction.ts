@@ -1,6 +1,6 @@
 import { redirect} from "react-router";
 import type { ActionFunctionArgs } from "react-router";
-import { ActionErrors } from "../../types/types";
+import type { ActionErrors } from "../../types/types";
 import { Temporal } from "temporal-polyfill";
 import { parsePlainDate } from "../../utils/parsePlainDate";
 

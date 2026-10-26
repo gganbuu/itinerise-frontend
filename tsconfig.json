@@ -8,6 +8,7 @@
     "noEmit": true,
     "isolatedModules": true,
     "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
 
     "allowJs": true,
     "checkJs": false,

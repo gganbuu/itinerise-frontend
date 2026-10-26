@@ -1,5 +1,5 @@
 import { Temporal } from "temporal-polyfill"
-import { IsoInstant } from "../types/types"
+import type { IsoInstant } from "../types/types"
 
 export function getStartMinutes(startTime: IsoInstant): number {
     const newDateTime = Temporal.Instant.from(startTime).toZonedDateTimeISO('UTC')
