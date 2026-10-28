@@ -4,16 +4,20 @@ import TextInput from "../TextInput/TextInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
 import DateInput from "../DateInput/DateInput"
-import { newTripReducer, newTripInitialState } from "../../hooks/newTripReducer"
 import { useState } from "react"
+import type { ChangeEvent } from "react"
+
+interface NewTripModalProps {
+    onClose: () => void
+}
 
 
-const NewTripModal = ({onClose}) => {
+const NewTripModal = ({onClose}: NewTripModalProps) => {
     const navigation = useNavigation();
     const [tripStartDate, setTripStartDate] = useState('')
     const isSubmitting = navigation.state === "submitting";
 
-    const handleTripStartDate = (e) => {
+    const handleTripStartDate = (e: ChangeEvent<HTMLInputElement>) => {
         setTripStartDate(e.target.value)
     }
     
