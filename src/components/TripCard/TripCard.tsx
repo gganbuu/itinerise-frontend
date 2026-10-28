@@ -14,7 +14,7 @@ const formatDay = (date: Temporal.PlainDate) => date.toLocaleString('en-US', {da
 
 const formatCountdown = (start: Temporal.PlainDate, end: Temporal.PlainDate) => {
   const today = Temporal.Now.plainDateISO()
-  const daysToStart = daysBetween(today, start) + 1
+  const daysToStart = daysBetween(today, start)
 
   if (daysToStart > 1) return `in ${daysToStart} days`
   if (daysToStart === 1) return 'tomorrow'
