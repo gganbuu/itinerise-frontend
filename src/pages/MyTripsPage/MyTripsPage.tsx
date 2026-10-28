@@ -1,4 +1,3 @@
-import React from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import FilterBar from '../../components/FilterBar/FilterBar'
 import FilterButton from '../../components/FilterBar/FilterButton'
@@ -15,18 +14,14 @@ import { Logo } from '../../components/Logo/Logo'
 import { Link } from 'react-router'
 import { useState } from 'react'
 import { useLoaderData } from 'react-router'
+import type myTripsLoader from './myTripsLoader'
 
 const MyTripsPage = () => {
-  const trips = useLoaderData()
-  
-
+  const trips = useLoaderData<typeof myTripsLoader>()
   const [modalState, setModalState] = useState(false)
   const toggleModal = () => {
     setModalState(!modalState)
   }
-
-  
-
   return (
     <div className={styles.myTripsContainer}>
       <NavBar>
