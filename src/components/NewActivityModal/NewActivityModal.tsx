@@ -1,13 +1,14 @@
 import styles from "./NewActivityModal.module.css"
-import { Form, useNavigation } from "react-router"
+import { Form } from "react-router"
 import TextInput from "../TextInput/TextInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
-import DateInput from "../DateInput/DateInput"
 
+interface NewActivityModalProps {
+    onClose: () => void;
+}
 
-const NewActivityModal = ({onClose}) => {
-    
+const NewActivityModal = ({onClose}: NewActivityModalProps) => {
     return (
         <Form method="post" className={styles.newTripModal}>
             <div className={styles.newTripContainer}>
