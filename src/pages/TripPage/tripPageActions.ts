@@ -40,7 +40,7 @@ async function moveActivityAction(formData: FormData, tripId: string): Promise<A
     const startTime = typeof rawStartTime === "string" && rawStartTime !== "" ? rawStartTime : null
 
     //check if activityId is not null
-    if (typeof activityId !== 'string') return { errors: [{message: 'Could move activity'}]}
+    if (typeof activityId !== 'string') return { errors: [{message: 'Could not move activity'}]}
 
 
     const res = await fetch(`/api/trip/${tripId}/settime/${activityId}`, {
