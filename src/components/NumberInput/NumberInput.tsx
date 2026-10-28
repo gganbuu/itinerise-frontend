@@ -10,7 +10,7 @@ interface NumberInputProps {
     step?: string;
 }
 
-const NumberInput = ({id, name, placeholder, onChange, required = true, step = 1}: NumberInputProps) => {
+const NumberInput = ({id, name, placeholder, onChange, required = true, step = '1'}: NumberInputProps) => {
   return (
     <input type='number'
            id={id} 
