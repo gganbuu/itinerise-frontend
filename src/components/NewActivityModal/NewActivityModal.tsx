@@ -1,6 +1,7 @@
 import styles from "./NewActivityModal.module.css"
 import { Form } from "react-router"
 import TextInput from "../TextInput/TextInput"
+import NumberInput from "../NumberInput/NumberInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
 
@@ -33,10 +34,10 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                     </div>
                     <div className={styles.twoColumn}>
                         <label className={styles.modalLabel} htmlFor="activityDuration">Duration (hr)
-                            <TextInput id="activityDuration" name="duration" placeholder="1hr" />
+                            <NumberInput id="activityDuration" name="duration" placeholder="1hr" step='0.25' />
                         </label>
                         <label className={styles.modalLabel} htmlFor="activityCost">Cost
-                            <TextInput id="activityCost" name="cost" placeholder="$ 100" />
+                            <NumberInput id="activityCost" name="cost" placeholder="$ 100" />
                         </label>
                     </div>
                     <label className={styles.modalLabel} htmlFor="activityDescription">Description
