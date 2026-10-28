@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
 
-    "allowJs": true,
     "checkJs": false,
     "strict": true,
 
