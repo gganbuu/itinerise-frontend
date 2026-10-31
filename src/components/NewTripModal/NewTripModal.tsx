@@ -26,7 +26,6 @@ const NewTripModal = ({onClose}: NewTripModalProps) => {
             <div className={styles.newTripContainer}>
                 <header>
                     <div className={styles.newTripTitleAndButton}>
-                        <h2>Plan a new trip</h2>
                         <button onClick={onClose} type="button">x</button>
                     </div>
                     <p className={styles.newTripSubtitle}>add your vacation details here</p>
