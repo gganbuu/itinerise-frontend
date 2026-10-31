@@ -1,0 +1,9 @@
+.dateInput {
+    width: 100%;
+    font-weight: var(--body-m);
+}
+
+/* No value picked yet: grey out the browser's dd/mm/yyyy hint */
+.empty {
+    color: grey;
+}

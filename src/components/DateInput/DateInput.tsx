@@ -1,4 +1,5 @@
-import type { ChangeEventHandler } from 'react';
+import { useState, type ChangeEventHandler } from 'react';
+import styles from './DateInput.module.css'
 
 interface DateInputProps {
   id: string,
@@ -10,12 +11,20 @@ interface DateInputProps {
 
 
 const DateInput = ({id, name, required, min = "", onChange}: DateInputProps ) => {
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setIsEmpty(e.target.value === "");
+    onChange?.(e);
+  }
+
   return (
     <input id={id}
            type="date"
            name={name}
            required={required}
-           onChange={onChange}
+           onChange={handleChange}
+           className={`${styles.dateInput} ${isEmpty ? styles.empty : ""}`}
            min={min}/>
   )
 }
