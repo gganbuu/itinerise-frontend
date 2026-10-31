@@ -37,7 +37,7 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                             <NumberInput id="activityDuration" name="duration" placeholder="1hr" step='0.25' />
                         </label>
                         <label className={styles.modalLabel} htmlFor="activityCost">Cost
-                            <NumberInput id="activityCost" name="cost" placeholder="$ 100" />
+                            <NumberInput id="activityCost" name="cost" placeholder="$ 100" step='0.01'/>
                         </label>
                     </div>
                     <label className={styles.modalLabel} htmlFor="activityDescription">Description
