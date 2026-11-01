@@ -12,12 +12,30 @@ export async function myTripsPageAction({request}: ActionFunctionArgs): Promise<
     switch (intent) {
         case "newTripAction": {
             return await newTripAction(formData)
-        } default:
+        } 
+        case "deleteTripAction": {
+            return await deleteTripAction(formData)
+        }
+        default:
             throw new Response(`Unknown intent: ${intent}`, { status: 400})
     }
 }
 
+export async function deleteTripAction(formData: FormData): Promise<ActionErrors | Response> {
+    const id = formData.get("id")
 
+    if (typeof id !== "string") return {errors: [{ message: "ID not found"}]}
+
+    const res = await fetch(`/api/mytrips/delete/${id}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include'
+    })
+
+    if (!res.ok) return { errors: [{message: 'Something went wrong, please try again'}]}
+    
+    return redirect('/')
+}
 
 
 export async function newTripAction(formData: FormData): Promise<ActionErrors | Response> {

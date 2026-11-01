@@ -11,12 +11,13 @@ interface DeleteTripModalProps {
 
 const DeleteTripModal = ({onClose, trip}: DeleteTripModalProps) => {
   return (
-    <Form className={styles.deleteTripModal}>
+    <Form method="post" className={styles.deleteTripModal}>
         <div className={styles.deleteTripContainer}>
           <header>
               <div className={styles.deleteTripTitleAndButton}>
                   <h2>Delete "{trip.name}"?</h2>
                   <button type="button" onClick={onClose}>x</button>
+                  <input type="hidden" name="id" value={trip.id}/>
               </div>
           </header>
           <hr />
@@ -24,7 +25,7 @@ const DeleteTripModal = ({onClose, trip}: DeleteTripModalProps) => {
               <SecondaryButton name="Cancel" onClick={onClose} />
               <PageButton type="submit"
                           name="Submit"
-                          intent="newActivityAction"/>
+                          intent="deleteTripAction"/>
           </footer>
         </div>
     </Form>
