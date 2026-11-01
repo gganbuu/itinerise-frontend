@@ -44,7 +44,7 @@ const MyTripsPage = () => {
 
           <div className={styles.buttonCluster}>
             <PageButton name="New trip" onClick={() => toggleNewTripModal()}/>
-            <SearchBar/>
+            <SearchBar/>  
           </div>
         </FilterBar>
 

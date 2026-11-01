@@ -4,10 +4,23 @@ import type { ActionErrors } from "../../types/types";
 import { Temporal } from "temporal-polyfill";
 import { parsePlainDate } from "../../utils/parsePlainDate";
 
-
-export async function newTripAction({ request }: ActionFunctionArgs): Promise<ActionErrors | Response>{
+export async function myTripsPageAction({request}: ActionFunctionArgs): Promise<ActionErrors | Response> {
     const formData = await request.formData()
-    
+    const intent = formData.get("intent")
+
+
+    switch (intent) {
+        case "newTripAction": {
+            return await newTripAction(formData)
+        } default:
+            throw new Response(`Unknown intent: ${intent}`, { status: 400})
+    }
+}
+
+
+
+
+export async function newTripAction(formData: FormData): Promise<ActionErrors | Response> {
     // getting different fields for new trip database get
     const name = formData.get("name")
     const destination =  formData.get("destination")

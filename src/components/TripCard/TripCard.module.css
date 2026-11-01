@@ -65,3 +65,6 @@
     color: var(--gray-500);
 }
 
+.trashButton {
+    cursor: pointer;
+}

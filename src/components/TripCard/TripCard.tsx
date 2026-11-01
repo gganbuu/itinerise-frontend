@@ -65,7 +65,7 @@ const TripCard = ({trip, onTrashToggle}: TripCardProps) => {
       </Link>
       {hoverState &&
       <div className={styles.hoverIcons}>
-        <Trash onClick={() => onTrashToggle(trip)}/>
+        <Trash onClick={() => onTrashToggle(trip)} className={styles.trashButton}/>
         <Ellipsis/>
       </div>
       }
