@@ -15,12 +15,18 @@ import { Link } from 'react-router'
 import { useState } from 'react'
 import { useLoaderData } from 'react-router'
 import type myTripsLoader from './myTripsLoader'
+import DeleteTripModal from '../../components/DeleteTripModal/DeleteTripModal'
+import type { TripSummary } from '../../types/types'
 
 const MyTripsPage = () => {
   const trips = useLoaderData<typeof myTripsLoader>()
-  const [modalState, setModalState] = useState(false)
-  const toggleModal = () => {
-    setModalState(!modalState)
+  const [newTripModalState, setNewTripModalState] = useState<boolean>(false)
+  const [trashModalState, setTrashModalState] = useState<TripSummary | null>(null)
+  const toggleNewTripModal = () => {
+    setNewTripModalState(prev => !prev)
+  }
+  const toggleTrashModal = (trip: TripSummary | null) => {
+    setTrashModalState(trip)
   }
   return (
     <div className={styles.myTripsContainer}>
@@ -37,17 +43,21 @@ const MyTripsPage = () => {
           </div>
 
           <div className={styles.buttonCluster}>
-            <PageButton name="New trip" onClick={() => toggleModal()}/>
+            <PageButton name="New trip" onClick={() => toggleNewTripModal()}/>
             <SearchBar/>
           </div>
         </FilterBar>
 
         <TripCardsContainer>
-          <NewTripCard onClick={() => toggleModal()}/>
-          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip}/>)}
+          <NewTripCard onClick={() => toggleNewTripModal()}/>
+          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip} onTrashToggle={() => toggleTrashModal(trip)}/>)}
         </TripCardsContainer>
         
-        {modalState && (<NewTripModal onClose={toggleModal}/>)}
+        {newTripModalState && (<NewTripModal onClose={toggleNewTripModal}/>)}
+
+        {trashModalState && (<DeleteTripModal onClose={() => toggleTrashModal(null)} trip={trashModalState}/>)}
+        
+  
       </main>
       <FooterBar/>
     </div>

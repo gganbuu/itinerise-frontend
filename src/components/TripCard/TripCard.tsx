@@ -6,6 +6,7 @@ import { toPlainDate } from '../../utils/toPlainDate'
 import type { TripSummary } from '../../types/types'
 import { Temporal } from 'temporal-polyfill'
 import { Trash, Ellipsis } from 'lucide-react'
+import DeleteTripModal from '../DeleteTripModal/DeleteTripModal'
 
 
 const daysBetween = (from: Temporal.PlainDate, to: Temporal.PlainDate)  => {
@@ -27,11 +28,13 @@ const formatCountdown = (start: Temporal.PlainDate, end: Temporal.PlainDate) => 
 
 interface TripCardProps {
   trip: TripSummary
+  onTrashToggle: (trip: TripSummary) => void
 }
 
 
-const TripCard = ({trip}: TripCardProps) => {
+const TripCard = ({trip, onTrashToggle}: TripCardProps) => {
   const [hoverState, setHoverState] = useState(false)
+  const [deleteModalState, setDeleteModalState] = useState(false)
   const startDate: Temporal.PlainDate = toPlainDate(trip.startDate)
   const endDate: Temporal.PlainDate = toPlainDate(trip.endDate)
   const days = daysBetween(startDate, endDate) + 1;
@@ -62,7 +65,7 @@ const TripCard = ({trip}: TripCardProps) => {
       </Link>
       {hoverState &&
       <div className={styles.hoverIcons}>
-        <Trash/>
+        <Trash onClick={() => onTrashToggle(trip)}/>
         <Ellipsis/>
       </div>
       }
