@@ -5,7 +5,7 @@ import NumberInput from "../A_Inputs/NumberInput/NumberInput"
 import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton"
 import PageButton from "../A_Buttons/PageButton/PageButton"
 import type { newTripPageAction } from "../../pages/TripPage/tripPageActions"
-import CategoryDropdown from "../A_Inputs/CategoryDropdown/CategoryDropdown"
+import CategoryDropdown from "../A_Inputs/CategoryDropdown/CategoryDropDown"
 
 interface NewActivityModalProps {
     onClose: () => void;
