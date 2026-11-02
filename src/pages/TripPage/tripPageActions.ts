@@ -1,7 +1,8 @@
 import type { ActionFunctionArgs} from "react-router"
 import type { ActionErrors } from "../../types/types"
+import { redirect } from "react-router"
 
-export async function newTripPageAction({request, params}: ActionFunctionArgs): Promise<ActionErrors | null> {
+export async function newTripPageAction({request, params}: ActionFunctionArgs): Promise<ActionErrors | null | Response> {
     const formData = await request.formData()
     const intent = formData.get("intent")
     
@@ -21,7 +22,7 @@ export async function newTripPageAction({request, params}: ActionFunctionArgs): 
     }
 }
 
-async function newActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | null>  {
+async function newActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | Response>  {
     const newActivityDetails = Object.fromEntries(formData)
     const res = await fetch(`/api/trip/${tripId}/newactivity`, {
         method: 'POST',
@@ -31,7 +32,7 @@ async function newActivityAction(formData: FormData, tripId: string): Promise<Ac
     })
 
     if (!res.ok) return { errors: [{ message: 'Something went wrong, please try again'}]}
-    return null
+    return redirect(`/trip/${tripId}`);
 }
 
 async function moveActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | null>  {

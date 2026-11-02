@@ -1,7 +1,6 @@
-// react
-import { useState} from 'react';
+
 // libraries
-import { useLoaderData, Link, useSubmit, useFetchers } from 'react-router'
+import { useLoaderData, Link, useSubmit, useFetchers, useSearchParams } from 'react-router'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
 import { Temporal } from 'temporal-polyfill';
 // components
@@ -24,8 +23,18 @@ import { isScheduled } from "../../utils/isScheduled"
 
 
 const TripPage = () => {
-  const [modalState, setModalState] = useState(false)
-  const toggleModal = () => { setModalState(!modalState)}
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isNewActivityModalOpen = searchParams.has("newActivity")
+  
+  const openActivityModal = () => {
+    setSearchParams({newActivity: "true"})
+  }
+
+  const closeActivityModal = () => {
+    setSearchParams({})
+  }
+
+
   const submit = useSubmit() // submit hook for submitting data without form 
   const fetchers = useFetchers() // for exposing requests that are still in flight (optimistic loading)
   
@@ -121,7 +130,7 @@ const TripPage = () => {
           <main className={styles.bubblesContainer}>
 
             <aside className={styles.sideBar}>
-              <PageButton name="New Activity" onClick={toggleModal}/>
+              <PageButton name="New Activity" onClick={openActivityModal}/>
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
               </div>
@@ -139,7 +148,7 @@ const TripPage = () => {
 
         </main>
 
-        {modalState && (<NewActivityModal onClose={toggleModal}/>)}
+        {isNewActivityModalOpen && (<NewActivityModal onClose={closeActivityModal}/>)}
 
         <FooterBar/>
       </div>
