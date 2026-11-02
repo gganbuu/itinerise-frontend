@@ -7,7 +7,7 @@ interface CategoryDropDownProps {
     required?: boolean
 }
 
-const CategoryDropdown = ({id, onChange, required = true}: CategoryDropDownProps) => {
+const CategoryDropdown = ({id, required = true}: CategoryDropDownProps) => {
   return (
     <select className={styles.categoryDropdown} id={id} name="category" required={required}>
         <option value="activity">Activity</option>
