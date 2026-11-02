@@ -3,7 +3,6 @@ import styles from './CategoryDropDown.module.css'
 
 interface CategoryDropDownProps {
     id: string,
-    onChange?: ChangeEventHandler<HTMLSelectElement>,
     required?: boolean
 }
 
