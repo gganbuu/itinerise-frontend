@@ -15,12 +15,30 @@ import { Link } from 'react-router'
 import { useState } from 'react'
 import { useLoaderData } from 'react-router'
 import type myTripsLoader from './myTripsLoader'
+import DeleteTripModal from '../../components/DeleteTripModal/DeleteTripModal'
+import type { TripSummary } from '../../types/types'
+
+import { useSearchParams } from 'react-router'
 
 const MyTripsPage = () => {
+  // loader
   const trips = useLoaderData<typeof myTripsLoader>()
-  const [modalState, setModalState] = useState(false)
-  const toggleModal = () => {
-    setModalState(!modalState)
+
+  // hooks
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [newTripModalState, setNewTripModalState] = useState<boolean>(false)
+  
+  const deleteTripId = searchParams.get("deleteTrip")
+  const tripToDelete = trips.find(trip => String(trip.id) === deleteTripId)
+  
+  const toggleNewTripModal = () => {
+    setNewTripModalState(prev => !prev)
+  }
+  const openTrashModal = (trip: TripSummary) => {
+    setSearchParams({ deleteTrip: String(trip.id)})
+  }
+  const closeTrashModal = () => {
+    setSearchParams({})
   }
   return (
     <div className={styles.myTripsContainer}>
@@ -37,17 +55,21 @@ const MyTripsPage = () => {
           </div>
 
           <div className={styles.buttonCluster}>
-            <PageButton name="New trip" onClick={() => toggleModal()}/>
-            <SearchBar/>
+            <PageButton name="New trip" onClick={() => toggleNewTripModal()}/>
+            <SearchBar/>  
           </div>
         </FilterBar>
 
         <TripCardsContainer>
-          <NewTripCard onClick={() => toggleModal()}/>
-          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip}/>)}
+          <NewTripCard onClick={() => toggleNewTripModal()}/>
+          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip} onTrashToggle={() => openTrashModal(trip)}/>)}
         </TripCardsContainer>
         
-        {modalState && (<NewTripModal onClose={toggleModal}/>)}
+        {newTripModalState && (<NewTripModal onClose={toggleNewTripModal}/>)}
+
+        {tripToDelete && (<DeleteTripModal onClose={closeTrashModal} trip={tripToDelete}/>)}
+        
+  
       </main>
       <FooterBar/>
     </div>

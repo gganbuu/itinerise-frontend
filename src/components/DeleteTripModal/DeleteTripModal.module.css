@@ -1,0 +1,48 @@
+.deleteTripModal {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4);
+}
+
+.deleteTripModal header, .deleteTripModal main, .deleteTripModal footer {
+    padding: 2rem;
+}
+    
+.deleteTripContainer {
+    margin: 5% auto;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    width: 420px;
+}
+
+.deleteTripTitleAndButton {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.deleteTripTitleAndButton button {
+    cursor: pointer;
+    border: none;
+    background-color: var(--blue-200);
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+}
+
+.deleteTripMain {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+} 
+
+.deleteTripModal footer {
+    display: flex;
+    justify-content: space-between;
+
+}

@@ -1,5 +1,5 @@
 import styles from "./NewTripModal.module.css"
-import { Form, useNavigation } from "react-router"
+import { Form } from "react-router"
 import TextInput from "../TextInput/TextInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
@@ -13,9 +13,7 @@ interface NewTripModalProps {
 
 
 const NewTripModal = ({onClose}: NewTripModalProps) => {
-    const navigation = useNavigation();
     const [tripStartDate, setTripStartDate] = useState('')
-    const isSubmitting = navigation.state === "submitting";
 
     const handleTripStartDate = (e: ChangeEvent<HTMLInputElement>) => {
         setTripStartDate(e.target.value)
@@ -50,8 +48,9 @@ const NewTripModal = ({onClose}: NewTripModalProps) => {
                 <hr />
                 <footer>
                     <SecondaryButton name="Cancel" onClick={onClose} />
-                    <PageButton type="submit" 
-                                name={isSubmitting ? "Creating...": "Create trip"}/>
+                    <PageButton type="submit"
+                                intent="newTripAction"
+                                name="Create trip"/>
                 </footer>
             </div>
         </Form>
