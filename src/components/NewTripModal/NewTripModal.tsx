@@ -1,11 +1,13 @@
 import styles from "./NewTripModal.module.css"
-import { Form } from "react-router"
+import { Form, useActionData } from "react-router"
 import TextInput from "../TextInput/TextInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
 import DateInput from "../DateInput/DateInput"
 import { useState } from "react"
 import type { ChangeEvent } from "react"
+import { myTripsPageAction } from "../../pages/MyTripsPage/myTripsPageAction"
+
 
 interface NewTripModalProps {
     onClose: () => void
@@ -13,6 +15,8 @@ interface NewTripModalProps {
 
 
 const NewTripModal = ({onClose}: NewTripModalProps) => {
+    const actionData = useActionData<typeof myTripsPageAction>()
+
     const [tripStartDate, setTripStartDate] = useState('')
 
     const handleTripStartDate = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +31,7 @@ const NewTripModal = ({onClose}: NewTripModalProps) => {
                         <h2>Plan a new trip</h2>
                         <button onClick={onClose} type="button">x</button>
                     </div>
+                    {actionData?.errors.map(err => <p key={err.message}>{err.message}</p>)}
                 </header>
                 <hr />
                 <main className={styles.newTripMain}> 
