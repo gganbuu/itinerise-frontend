@@ -1,4 +1,5 @@
-import { Form } from "react-router"
+import { Form, useActionData } from "react-router"
+import type { myTripsPageAction } from "../../pages/MyTripsPage/myTripsPageAction";
 import styles from "./DeleteTripModal.module.css"
 import PageButton from "../PageButton/PageButton";
 import SecondaryButton from "../SecondaryButton/SecondaryButton";
@@ -10,6 +11,7 @@ interface DeleteTripModalProps {
 }
 
 const DeleteTripModal = ({onClose, trip}: DeleteTripModalProps) => {
+  const actionData = useActionData<typeof myTripsPageAction>()
   return (
     <Form method="post" className={styles.deleteTripModal}>
         <div className={styles.deleteTripContainer}>
@@ -21,11 +23,13 @@ const DeleteTripModal = ({onClose, trip}: DeleteTripModalProps) => {
               </div>
           </header>
           <hr />
+          {actionData?.errors.map(err => <p key={err.message}>{err.message}</p>)}  
           <footer>
               <SecondaryButton name="Cancel" onClick={onClose} />
               <PageButton type="submit"
                           name="Submit"
-                          intent="deleteTripAction"/>
+                          intent="deleteTripAction"
+                          />
           </footer>
         </div>
     </Form>

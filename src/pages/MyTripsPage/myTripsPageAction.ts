@@ -5,6 +5,7 @@ import { Temporal } from "temporal-polyfill";
 import { parsePlainDate } from "../../utils/parsePlainDate";
 
 export async function myTripsPageAction({request}: ActionFunctionArgs): Promise<ActionErrors | Response> {
+    
     const formData = await request.formData()
     const intent = formData.get("intent")
 
@@ -27,14 +28,12 @@ export async function deleteTripAction(formData: FormData): Promise<ActionErrors
     if (typeof id !== "string") return {errors: [{ message: "ID not found"}]}
 
     const res = await fetch(`/api/mytrips/delete/${id}`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include'
+        method: 'DELETE'
     })
 
     if (!res.ok) return { errors: [{message: 'Something went wrong, please try again'}]}
     
-    return redirect('/')
+    return redirect("/")
 }
 
 

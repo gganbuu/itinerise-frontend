@@ -18,15 +18,27 @@ import type myTripsLoader from './myTripsLoader'
 import DeleteTripModal from '../../components/DeleteTripModal/DeleteTripModal'
 import type { TripSummary } from '../../types/types'
 
+import { useSearchParams } from 'react-router'
+
 const MyTripsPage = () => {
+  // loader
   const trips = useLoaderData<typeof myTripsLoader>()
+
+  // hooks
+  const [searchParams, setSearchParams] = useSearchParams()
   const [newTripModalState, setNewTripModalState] = useState<boolean>(false)
-  const [trashModalState, setTrashModalState] = useState<TripSummary | null>(null)
+  
+  const deleteTripId = searchParams.get("deleteTrip")
+  const tripToDelete = trips.find(trip => String(trip.id) === deleteTripId)
+  
   const toggleNewTripModal = () => {
     setNewTripModalState(prev => !prev)
   }
-  const toggleTrashModal = (trip: TripSummary | null) => {
-    setTrashModalState(trip)
+  const openTrashModal = (trip: TripSummary) => {
+    setSearchParams({ deleteTrip: String(trip.id)})
+  }
+  const closeTrashModal = () => {
+    setSearchParams({})
   }
   return (
     <div className={styles.myTripsContainer}>
@@ -50,12 +62,12 @@ const MyTripsPage = () => {
 
         <TripCardsContainer>
           <NewTripCard onClick={() => toggleNewTripModal()}/>
-          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip} onTrashToggle={() => toggleTrashModal(trip)}/>)}
+          {trips?.length > 0 && trips.map(trip => <TripCard key={trip.id} trip={trip} onTrashToggle={() => openTrashModal(trip)}/>)}
         </TripCardsContainer>
         
         {newTripModalState && (<NewTripModal onClose={toggleNewTripModal}/>)}
 
-        {trashModalState && (<DeleteTripModal onClose={() => toggleTrashModal(null)} trip={trashModalState}/>)}
+        {tripToDelete && (<DeleteTripModal onClose={closeTrashModal} trip={tripToDelete}/>)}
         
   
       </main>
