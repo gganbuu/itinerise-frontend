@@ -8,7 +8,7 @@ import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import { Logo } from '../../components/Logo/Logo';
 import FooterBar from '../../components/FooterBar/FooterBar';
-import PageButton from '../../components/PageButton/PageButton';
+import PageButton from '../../components/A_Buttons/PageButton/PageButton';
 import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
