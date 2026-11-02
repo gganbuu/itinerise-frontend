@@ -1,15 +1,17 @@
 import styles from "./NewActivityModal.module.css"
-import { Form } from "react-router"
+import { Form, useActionData } from "react-router"
 import TextInput from "../TextInput/TextInput"
 import NumberInput from "../NumberInput/NumberInput"
 import SecondaryButton from "../SecondaryButton/SecondaryButton"
 import PageButton from "../PageButton/PageButton"
+import { newTripPageAction } from "../../pages/TripPage/tripPageActions"
 
 interface NewActivityModalProps {
     onClose: () => void;
 }
 
 const NewActivityModal = ({onClose}: NewActivityModalProps) => {
+    const actionData = useActionData<typeof newTripPageAction>();
     return (
         <Form method="post" className={styles.newTripModal}>
             <div className={styles.newTripContainer}>
@@ -18,6 +20,7 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                         <h2>New Activity</h2>
                         <button type="button" onClick={onClose}>x</button>
                     </div>
+                    {actionData?.errors.map(err => <p key={err.message}>{err.message}</p>)}
                 </header>
                 <hr />
                 <main className={styles.newTripMain}> 
