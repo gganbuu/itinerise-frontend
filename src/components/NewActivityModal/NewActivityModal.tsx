@@ -5,6 +5,7 @@ import NumberInput from "../A_Inputs/NumberInput/NumberInput"
 import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton"
 import PageButton from "../A_Buttons/PageButton/PageButton"
 import type { newTripPageAction } from "../../pages/TripPage/tripPageActions"
+import CategoryDropdown from "../A_Inputs/CategoryDropdown/CategoryDropdown"
 
 interface NewActivityModalProps {
     onClose: () => void;
@@ -29,7 +30,7 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                     </label>
                     <div className={styles.twoColumn}>
                         <label className={styles.modalLabel} htmlFor="activityCategory">Category
-                            <TextInput id="activityCategory" name="category" placeholder="Food" />
+                            <CategoryDropdown id="activityCategory"/>
                         </label>
                         <label className={styles.modalLabel} htmlFor="activityLocation">Location
                             <TextInput id="activityLocation" name="location" placeholder="Timbuktoo" />
