@@ -5,14 +5,15 @@ import type { Activity } from '../../types/types'
 
 interface ActivityBankProps {
     activities: Activity[];
+    openDeleteModal: (activity: Activity) => void;
 }
 
-const ActivityBank = ({activities}: ActivityBankProps) => {
+const ActivityBank = ({activities, openDeleteModal}: ActivityBankProps) => {
     const { ref } = useDroppable({id: 'activityBank'})
     return (
         <div className={styles.container} ref={ref}>
             <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
-            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity}/>)}
+            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity} onTrashClick={() => openDeleteModal(activity)}/>)}
         </div>
     )
 }

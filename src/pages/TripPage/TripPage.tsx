@@ -14,18 +14,24 @@ import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
 
-import type { TimeSlotData } from '../../types/types';
+import type { Activity, TimeSlotData } from '../../types/types';
 
 
 //utility functions
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
+import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
 
 
 const TripPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isNewActivityModalOpen = searchParams.has("newActivity")
-  
+  const isDeleteActivityModalOpen = searchParams.has("deleteActivity")
+
+  const openDeleteModal = (activity: Activity) => {
+    setSearchParams({deleteActivity: String(activity.id)})
+  }
+
   const openActivityModal = () => {
     setSearchParams({newActivity: "true"})
   }
@@ -41,6 +47,7 @@ const TripPage = () => {
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
 
+  const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
   //optimistic ui
   const getPendingMoves = (): Record<string, string | null> => {
@@ -134,14 +141,15 @@ const TripPage = () => {
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
               </div>
-              <ActivityBank activities={activitiesBanked}/>
+              <ActivityBank activities={activitiesBanked} openDeleteModal={openDeleteModal}/>
             </aside>
 
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
                 {dates.map(date => <CalendarColumn key={date.toString()} 
                                                   date={date}
-                                                   activities={activitiesCalendared(date)}/>)}
+                                                  activities={activitiesCalendared(date)}
+                                                  openDeleteModal={openDeleteModal}/>)}
               </div>
             </aside>
           </main>
@@ -149,6 +157,8 @@ const TripPage = () => {
         </main>
 
         {isNewActivityModalOpen && (<NewActivityModal onClose={closeActivityModal}/>)}
+
+        {isDeleteActivityModalOpen && (<DeleteActivityModal activity={activityToDelete} onClose={closeActivityModal}/>)}
 
         <FooterBar/>
       </div>
