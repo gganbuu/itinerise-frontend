@@ -1,4 +1,3 @@
-
 // libraries
 import { useLoaderData, Link, useSubmit, useFetchers, useSearchParams } from 'react-router'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
@@ -22,7 +21,6 @@ import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
 import { ACTIVITY_BANK_ID, MOVE_ACTIVITY_INTENT, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
-import { slotStartTime } from '../../utils/calendarGrid';
 
 
 const TripPage = () => {
@@ -98,8 +96,7 @@ const TripPage = () => {
     if (target.id === ACTIVITY_BANK_ID) {
       startTime = ''
     } else if (target.type === TIME_SLOT_DROP_TYPE) {
-      const { date, startMinutes } = target.data as TimeSlotData
-      startTime = slotStartTime(date, startMinutes)
+      startTime = (target.data as TimeSlotData).startTime
     } else {
       return
     }
