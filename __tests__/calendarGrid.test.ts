@@ -1,5 +1,6 @@
 import { SLOT_MINUTES } from "../src/constants/calendar";
-import {minutesToGridRow, durationToRowSpan} from "../src/utils/calendarGrid";
+import {minutesToGridRow, durationToRowSpan, slotStartTime} from "../src/utils/calendarGrid";
+import { Temporal } from "temporal-polyfill";
 
 describe("minutesToGridRow tests", () => {
     test("0 minutes case", () => {
@@ -16,5 +17,16 @@ describe("durationToRowSpan", () => {
     })
     test("61 minutes case", () => {
         expect(durationToRowSpan(61)).toBe(5)
+    })
+})
+
+describe("slotStartTime", () => { 
+    test("570 minutes and 2026/10/08", () => {
+        const plainDate = Temporal.PlainDate.from('2026-10-08')
+        expect(slotStartTime(plainDate, 570)).toBe('2026-10-08T09:30:00Z')
+    })
+    test("24x60 minutes and 2026/12/31", () => {
+        const plainDate = Temporal.PlainDate.from('2026-12-31')
+        expect(slotStartTime(plainDate, 24*60 + 10)).toBe('2027-01-01T00:10:00Z')
     })
 })
