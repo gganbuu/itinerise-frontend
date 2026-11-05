@@ -2,7 +2,7 @@ import styles from './CalendarTimeSlot.module.css'
 import { useDroppable } from '@dnd-kit/react'
 import type { Temporal } from 'temporal-polyfill'
 import type { TimeSlotData } from '../../types/types'
-import { TIME_SLOT_DROP_TYPE, ACTIVITY_DRAG_TYPE } from '../../constants/calendar';
+import { ACTIVITY_DRAG_TYPE, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
 import { slotStartTime } from '../../utils/calendarGrid';
 
 interface CalendarTimeSlotProps {
@@ -15,6 +15,7 @@ const CalendarTimeSlot = ({date, startMinutes}: CalendarTimeSlotProps) => {
     const { ref } = useDroppable({
         id: `${date.toString()}-${startMinutes}`,
         type: TIME_SLOT_DROP_TYPE,
+        accept: ACTIVITY_DRAG_TYPE,
         data
     })
 
