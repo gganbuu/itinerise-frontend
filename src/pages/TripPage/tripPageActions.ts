@@ -16,6 +16,9 @@ export async function newTripPageAction({request, params}: ActionFunctionArgs): 
         case "moveActivity": {
             return await moveActivityAction(formData, tripId)
         }
+        case "deleteActivityAction": {
+            return await deleteActivityAction(formData, tripId)
+        }
         default: 
             throw new Response(`Unknown intent: ${intent}`, { status: 400})
 
@@ -53,4 +56,15 @@ async function moveActivityAction(formData: FormData, tripId: string): Promise<A
 
     if (!res.ok) return { errors: [{ message: 'Could not move activity'}]}
     return null
+}
+
+async function deleteActivityAction(formData: FormData, tripId: string): Promise<ActionErrors | Response> {
+    const activityId = formData.get("id")
+    const res = await fetch(`/api/trip/${tripId}/deleteactivity/${activityId}`, {
+        method: `DELETE`
+    })  
+
+    if (!res.ok) return { errors: [{ message: 'Could not delete activity'}]}
+
+    return redirect(`/trip/${tripId}`);
 }

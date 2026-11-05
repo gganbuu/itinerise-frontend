@@ -3,14 +3,15 @@ import ActivityBlock from '../ActivityBlock/ActivityBlock'
 import CalendarTimeSlot from '../CalendarTimeSlot/CalendarTimeSlot'
 import { getStartMinutes } from '../../utils/getStartMinutes'
 import type { Temporal } from 'temporal-polyfill'
-import type { ScheduledActivity } from '../../types/types'
+import type { Activity, ScheduledActivity } from '../../types/types'
 
 interface CalendarColumnProps { 
     date: Temporal.PlainDate;
     activities: ScheduledActivity[];
+    openDeleteModal: (activity: Activity) => void;
 }
 
-const CalendarColumn = ({date, activities}: CalendarColumnProps) => {
+const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps) => {
     const dayOfTheWeek = date.toLocaleString('en-US', { weekday: 'short' })
     const shortDate = date.toString()
 
@@ -31,6 +32,7 @@ const CalendarColumn = ({date, activities}: CalendarColumnProps) => {
                             key={a.id}
                             activity={a}
                             style={{ gridRow: `${startRow} / span ${span}`, gridColumn: 1, zIndex: 1}}
+                            onTrashClick={() => openDeleteModal(a)}
                         />
                     )
                 })}
