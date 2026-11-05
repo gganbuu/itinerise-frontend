@@ -32,6 +32,6 @@ export interface TimeSlotData {
     startTime: IsoInstant;
 }
 
-export interface ActitivityDragData {
+export interface ActivityDragData {
     activity: Activity;
 }
