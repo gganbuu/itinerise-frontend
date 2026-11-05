@@ -13,7 +13,7 @@ interface DeleteActivityModalProps {
 const DeleteActivityModal = ({activity, onClose}: DeleteActivityModalProps) => {
   const actionData = useActionData<typeof newTripPageAction>()
   return (
-    <Form className={styles.deleteActivityModal}>
+    <Form method="POST" className={styles.deleteActivityModal}>
       <div className={styles.deleteActivityContainer}>
           <header>
               <div className={styles.deleteActivityTitleAndButton}>
