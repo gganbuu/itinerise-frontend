@@ -1,6 +1,7 @@
 import type { ActionFunctionArgs} from "react-router"
 import type { ActionErrors } from "../../types/types"
 import { redirect } from "react-router"
+import { MOVE_ACTIVITY_INTENT } from "../../constants/calendar"
 
 export async function newTripPageAction({request, params}: ActionFunctionArgs): Promise<ActionErrors | null | Response> {
     const formData = await request.formData()
@@ -13,7 +14,7 @@ export async function newTripPageAction({request, params}: ActionFunctionArgs): 
         case "newActivityAction": {
             return await newActivityAction(formData, tripId)
         }
-        case "moveActivity": {
+        case MOVE_ACTIVITY_INTENT: {
             return await moveActivityAction(formData, tripId)
         }
         case "deleteActivityAction": {

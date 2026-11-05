@@ -21,6 +21,7 @@ import type { Activity, TimeSlotData } from '../../types/types';
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
+import { ACTIVITY_BANK_ID, MOVE_ACTIVITY_INTENT, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
 
 
 const TripPage = () => {
@@ -55,7 +56,7 @@ const TripPage = () => {
     
     for (const fetcher of fetchers)  {
       const formData = fetcher.formData
-      if (formData?.get('intent') !== 'moveActivity') continue
+      if (formData?.get('intent') !== MOVE_ACTIVITY_INTENT) continue
 
       const activityId = formData.get('activityId')
       const startTime = formData.get('startTime')
@@ -93,9 +94,9 @@ const TripPage = () => {
     if (!source || !target) return
 
     let startTime: string
-    if (target.id === 'activityBank') {
+    if (target.id === ACTIVITY_BANK_ID) {
       startTime = ''
-    } else if (target.type === 'timeSlot') {
+    } else if (target.type === TIME_SLOT_DROP_TYPE) {
       const { date, startMinutes } = target.data as TimeSlotData
       startTime = date.toPlainDateTime()
         .add({ minutes: startMinutes })
@@ -106,7 +107,7 @@ const TripPage = () => {
       return
     }
     submit(
-      { intent: 'moveActivity', activityId: source.id, startTime },
+      { intent: MOVE_ACTIVITY_INTENT, activityId: source.id, startTime },
       { method: 'post', navigate: false, fetcherKey: `move-${source.id}` }
     )
   }

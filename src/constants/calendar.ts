@@ -8,5 +8,5 @@ export const TIME_SLOT_DROP_TYPE = 'timeSlot';
 export const ACTIVITY_DRAG_TYPE = 'activity';
 
 // form intent handled by newTripPageAction
-export const MOVE_ACTIVITY_INTENT = 'move activity';
+export const MOVE_ACTIVITY_INTENT = 'moveActivity';
 
