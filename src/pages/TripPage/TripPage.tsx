@@ -22,6 +22,7 @@ import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
 import { ACTIVITY_BANK_ID, MOVE_ACTIVITY_INTENT, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
+import { slotStartTime } from '../../utils/calendarGrid';
 
 
 const TripPage = () => {
@@ -98,11 +99,7 @@ const TripPage = () => {
       startTime = ''
     } else if (target.type === TIME_SLOT_DROP_TYPE) {
       const { date, startMinutes } = target.data as TimeSlotData
-      startTime = date.toPlainDateTime()
-        .add({ minutes: startMinutes })
-        .toZonedDateTime('UTC')
-        .toInstant()
-        .toString()
+      startTime = slotStartTime(date, startMinutes)
     } else {
       return
     }
