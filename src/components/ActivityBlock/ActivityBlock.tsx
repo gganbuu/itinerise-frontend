@@ -23,9 +23,9 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
   })
   return (
     <div className={styles.activityContainer} ref={ref} style={style} onMouseEnter={handleHoverOn} onMouseLeave={handleHoverOff}>
-        <p>{activity.durationMinutes} min</p>
-        <p>{activity.name}</p>
+        <h3>{activity.name}</h3>
         <p className={styles.activityDescription}>{activity.description}</p>
+        <p className={styles.activityDuration}>{activity.durationMinutes} mins</p>
         {hoverState && <Trash onClick={() => onTrashClick(activity)} className={styles.trashButton}/>}
     </div>
   )
