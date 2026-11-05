@@ -1,4 +1,3 @@
-import type { ChangeEventHandler } from 'react'
 import styles from './CategoryDropDown.module.css'
 
 interface CategoryDropDownProps {
