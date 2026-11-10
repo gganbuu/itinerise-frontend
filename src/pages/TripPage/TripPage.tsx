@@ -21,6 +21,7 @@ import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
 import { ACTIVITY_BANK_ID, MOVE_ACTIVITY_INTENT, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
+import { getDropDestination } from './getDropDestination';
 
 
 const TripPage = () => {
@@ -92,14 +93,10 @@ const TripPage = () => {
     const { source, target } = e.operation
     if (!source || !target) return
 
-    let startTime: string
-    if (target.id === ACTIVITY_BANK_ID) {
-      startTime = ''
-    } else if (target.type === TIME_SLOT_DROP_TYPE) {
-      startTime = (target.data as TimeSlotData).startTime
-    } else {
-      return
-    }
+    const destination = getDropDestination(target)
+    if (!destination) return
+
+    const startTime = destination.kind === 'bank' ? '' : destination.startTime
     submit(
       { intent: MOVE_ACTIVITY_INTENT, activityId: source.id, startTime },
       { method: 'post', navigate: false, fetcherKey: `move-${source.id}` }
