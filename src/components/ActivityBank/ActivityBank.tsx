@@ -2,7 +2,7 @@ import ActivityBlock from '../ActivityBlock/ActivityBlock'
 import { useDroppable } from '@dnd-kit/react'
 import styles from './ActivityBank.module.css'
 import type { Activity } from '../../types/types'
-import { ACTIVITY_BANK_ID } from '../../constants/calendar'
+import { ACTIVITY_BANK_ID, ACTIVITY_DRAG_TYPE } from '../../constants/calendar'
 
 interface ActivityBankProps {
     activities: Activity[];
@@ -10,7 +10,10 @@ interface ActivityBankProps {
 }
 
 const ActivityBank = ({activities, openDeleteModal}: ActivityBankProps) => {
-    const { ref } = useDroppable({id: ACTIVITY_BANK_ID})
+    const { ref } = useDroppable({
+        id: ACTIVITY_BANK_ID,
+        accept: ACTIVITY_DRAG_TYPE,
+    })
     return (
         <div className={styles.container} ref={ref}>
             <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
