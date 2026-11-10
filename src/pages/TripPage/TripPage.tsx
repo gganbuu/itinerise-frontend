@@ -13,7 +13,7 @@ import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
 
-import type { Activity } from '../../types/types';
+import type { Activity, ActivityDragData } from '../../types/types';
 
 
 //utility functions
@@ -22,6 +22,7 @@ import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
 import { MOVE_ACTIVITY_INTENT} from '../../constants/calendar';
 import { getDropDestination } from './getDropDestination';
+import { useMoveActivity } from '../../hooks/useMoveActivity';
 
 
 const TripPage = () => {
@@ -42,7 +43,7 @@ const TripPage = () => {
   }
 
 
-  const submit = useSubmit() // submit hook for submitting data without form 
+  const moveActivity = useMoveActivity()  // submit hook for submitting data without form 
   const fetchers = useFetchers() // for exposing requests that are still in flight (optimistic loading)
   
   const trip = useLoaderData<typeof tripLoader>();
@@ -93,14 +94,17 @@ const TripPage = () => {
     const { source, target } = e.operation
     if (!source || !target) return
 
+    const {activity} = source.data as ActivityDragData
+
     const destination = getDropDestination(target)
     if (!destination) return
 
-    const startTime = destination.kind === 'bank' ? '' : destination.startTime
-    submit(
-      { intent: MOVE_ACTIVITY_INTENT, activityId: source.id, startTime },
-      { method: 'post', navigate: false, fetcherKey: `move-${source.id}` }
-    )
+    if (destination.kind === 'bank') {
+      moveActivity(activity, null)
+      return
+    }
+
+    moveActivity(activity, destination.startTime)
   }
 
   return (
