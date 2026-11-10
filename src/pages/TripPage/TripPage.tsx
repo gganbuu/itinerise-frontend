@@ -13,14 +13,14 @@ import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
 
-import type { Activity, TimeSlotData } from '../../types/types';
+import type { Activity } from '../../types/types';
 
 
 //utility functions
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
-import { ACTIVITY_BANK_ID, MOVE_ACTIVITY_INTENT, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
+import { MOVE_ACTIVITY_INTENT} from '../../constants/calendar';
 import { getDropDestination } from './getDropDestination';
 
 
