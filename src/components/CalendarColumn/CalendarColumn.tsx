@@ -2,8 +2,10 @@ import styles from './CalendarColumn.module.css'
 import ActivityBlock from '../ActivityBlock/ActivityBlock'
 import CalendarTimeSlot from '../CalendarTimeSlot/CalendarTimeSlot'
 import { getStartMinutes } from '../../utils/getStartMinutes'
+import { minutesToGridRow, durationToRowSpan } from '../../utils/calendarGrid'
 import type { Temporal } from 'temporal-polyfill'
 import type { Activity, ScheduledActivity } from '../../types/types'
+import { SLOT_MINUTES, SLOTS_PER_DAY } from '../../constants/calendar'
 
 interface CalendarColumnProps { 
     date: Temporal.PlainDate;
@@ -21,12 +23,12 @@ const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps
                 <p>{dayOfTheWeek}</p>
                 <h4>{shortDate}</h4>
             </div>
-            <div className={styles.timeColumn}>
-                {Array.from({length: 96}).map((_,i) => <CalendarTimeSlot key={i} date={date} startMinutes={i * 15}/>)}
+            <div className={styles.timeColumn} style={{ gridTemplateRows: `repeat(${SLOTS_PER_DAY}, 16px)`}}>
+                {Array.from({length: SLOTS_PER_DAY}, (_, i) => <CalendarTimeSlot key={i} date={date} startMinutes={i * SLOT_MINUTES}/>)}
 
                 {activities.map(a => {
-                    const startRow = getStartMinutes(a.startTime) / 15 + 1
-                    const span = Math.max(1, Math.ceil(a.durationMinutes / 15))
+                    const startRow = minutesToGridRow(getStartMinutes(a.startTime))
+                    const span = durationToRowSpan(a.durationMinutes)
                     return (
                         <ActivityBlock
                             key={a.id}

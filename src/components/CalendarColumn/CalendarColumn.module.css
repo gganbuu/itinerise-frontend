@@ -14,7 +14,6 @@
 
 .timeColumn {
     display: grid;
-    grid-template-rows: repeat(96, 16px);
     border: 1px dashed var(--gray-300);
     position: relative;
 }

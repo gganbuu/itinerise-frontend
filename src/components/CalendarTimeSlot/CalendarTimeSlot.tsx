@@ -2,6 +2,8 @@ import styles from './CalendarTimeSlot.module.css'
 import { useDroppable } from '@dnd-kit/react'
 import type { Temporal } from 'temporal-polyfill'
 import type { TimeSlotData } from '../../types/types'
+import { ACTIVITY_DRAG_TYPE, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
+import { minutesToGridRow, slotStartTime } from '../../utils/calendarGrid';
 
 interface CalendarTimeSlotProps {
     date: Temporal.PlainDate;
@@ -9,22 +11,22 @@ interface CalendarTimeSlotProps {
 }
 
 const CalendarTimeSlot = ({date, startMinutes}: CalendarTimeSlotProps) => {
-    const data: TimeSlotData = { date, startMinutes }
+    const data: TimeSlotData = {startTime: slotStartTime(date, startMinutes)}
     const { ref } = useDroppable({
         id: `${date.toString()}-${startMinutes}`,
-        type: 'timeSlot',
+        type: TIME_SLOT_DROP_TYPE,
+        accept: ACTIVITY_DRAG_TYPE,
         data
     })
+    const isHourStart = startMinutes % 60 === 0
 
     return (
         <div ref={ref} className=
             {`
             ${styles.slot}
-            ${startMinutes % 60 === 0 ? styles.hourStart: ''}
+            ${isHourStart ? styles.hourStart: ''}
             `}
-            style={{ gridRow: startMinutes / 15 + 1, gridColumn: 1 }}>
-
-        </div>
+            style={{ gridRow: minutesToGridRow(startMinutes), gridColumn: 1 }}/>
     )
 }
 

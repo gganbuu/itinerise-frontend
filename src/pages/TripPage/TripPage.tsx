@@ -1,8 +1,7 @@
-
 // libraries
-import { useLoaderData, Link, useSubmit, useFetchers, useSearchParams } from 'react-router'
+import { useLoaderData, Link, useSearchParams } from 'react-router'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
-import { Temporal } from 'temporal-polyfill';
+import type { Temporal } from 'temporal-polyfill';
 // components
 import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
@@ -14,13 +13,18 @@ import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
 
-import type { Activity, TimeSlotData } from '../../types/types';
+import type { Activity, ActivityDragData } from '../../types/types';
 
 
 //utility functions
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
+import { getDropDestination } from './getDropDestination';
+import { useMoveActivity } from '../../hooks/useMoveActivity';
+import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
+import { toPlainDate } from '../../utils/toPlainDate';
+import { findOverlappingActivity } from '../../utils/findOverlappingActivity';
 
 
 const TripPage = () => {
@@ -41,8 +45,7 @@ const TripPage = () => {
   }
 
 
-  const submit = useSubmit() // submit hook for submitting data without form 
-  const fetchers = useFetchers() // for exposing requests that are still in flight (optimistic loading)
+  const moveActivity = useMoveActivity()  // submit hook for submitting data without form 
   
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
@@ -50,69 +53,34 @@ const TripPage = () => {
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
   //optimistic ui
-  const getPendingMoves = (): Record<string, string | null> => {
-    const pendingMoves: Record<string, string | null> = {}
-    
-    for (const fetcher of fetchers)  {
-      const formData = fetcher.formData
-      if (formData?.get('intent') !== 'moveActivity') continue
-
-      const activityId = formData.get('activityId')
-      const startTime = formData.get('startTime')
-      
-      if (typeof activityId !== 'string') continue
-
-      pendingMoves[activityId] = typeof startTime === 'string' && startTime !== '' ? startTime: null
-    }
-
-    return pendingMoves
-
-  }
-
-  const pendingMoves = getPendingMoves()
-
-  const activities = trip.activities.map(a => 
-    String(a.id) in pendingMoves ? { ...a, startTime: pendingMoves[a.id]} : a
-  )
+  const activities = useOptimisticActivities(trip.activities)
   
   // gets all banked activites by checking if activity has a starttime
-  const activitiesBanked = activities.filter(a => !a.startTime)
-  
-  // gets all activites on a specific date, checking if:
-  // - activity has a start time 
-  // - a.startTime is the same date as date.to datestring
-  const activitiesCalendared = (date: Temporal.PlainDate) => activities
-        .filter(isScheduled)
-        .filter(a => Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate().equals(date));
+  const bankedActivities = activities.filter(a => !isScheduled(a))
+  const scheduledActivites = activities.filter(isScheduled)
+  const activitiesOn = (date: Temporal.PlainDate) => scheduledActivites.filter(a => toPlainDate(a.startTime).equals(date))
 
+  const handleDragEnd = ({ canceled, operation }: DragEndEvent) => {
+    const { source, target } = operation
+    if (canceled || !source || !target) return
 
-  const handleDragEnd = (e: DragEndEvent) => {
-    if (e.canceled) return
+    const {activity} = source.data as ActivityDragData
 
-    const { source, target } = e.operation
-    if (!source || !target) return
+    const destination = getDropDestination(target)
+    if (!destination) return
 
-    let startTime: string
-    if (target.id === 'activityBank') {
-      startTime = ''
-    } else if (target.type === 'timeSlot') {
-      const { date, startMinutes } = target.data as TimeSlotData
-      startTime = date.toPlainDateTime()
-        .add({ minutes: startMinutes })
-        .toZonedDateTime('UTC')
-        .toInstant()
-        .toString()
-    } else {
+    if (destination.kind === 'bank') {
+      moveActivity(activity, null)
       return
     }
-    submit(
-      { intent: 'moveActivity', activityId: source.id, startTime },
-      { method: 'post', navigate: false, fetcherKey: `move-${source.id}` }
-    )
+    const overlapping = findOverlappingActivity(activity, destination.startTime, activities)
+    if (overlapping) return
+
+    moveActivity(activity, destination.startTime)
   }
 
   return (
-    <DragDropProvider onDragEnd={(e) => handleDragEnd(e)}>
+    <DragDropProvider onDragEnd={handleDragEnd}>
       <div className={styles.tripPageWrapper}>
         <NavBar>
           <div className={styles.navLinks}>
@@ -141,14 +109,14 @@ const TripPage = () => {
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
               </div>
-              <ActivityBank activities={activitiesBanked} openDeleteModal={openDeleteModal}/>
+              <ActivityBank activities={bankedActivities} openDeleteModal={openDeleteModal}/>
             </aside>
 
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
                 {dates.map(date => <CalendarColumn key={date.toString()} 
                                                   date={date}
-                                                  activities={activitiesCalendared(date)}
+                                                  activities={activitiesOn(date)}
                                                   openDeleteModal={openDeleteModal}/>)}
               </div>
             </aside>
