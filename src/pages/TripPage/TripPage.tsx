@@ -24,6 +24,7 @@ import { getDropDestination } from './getDropDestination';
 import { useMoveActivity } from '../../hooks/useMoveActivity';
 import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
 import { toPlainDate } from '../../utils/toPlainDate';
+import { findOverlappingActivity } from '../../utils/findOverlappingActivity';
 
 
 const TripPage = () => {
@@ -73,6 +74,8 @@ const TripPage = () => {
       moveActivity(activity, null)
       return
     }
+    const overlapping = findOverlappingActivity(activity, destination.startTime, activities)
+    if (overlapping) return
 
     moveActivity(activity, destination.startTime)
   }
