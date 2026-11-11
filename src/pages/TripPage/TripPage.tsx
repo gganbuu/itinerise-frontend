@@ -1,7 +1,7 @@
 // libraries
 import { useLoaderData, Link, useSearchParams } from 'react-router'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
-import { Temporal } from 'temporal-polyfill';
+import type { Temporal } from 'temporal-polyfill';
 // components
 import styles from './TripPage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
@@ -23,6 +23,7 @@ import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActi
 import { getDropDestination } from './getDropDestination';
 import { useMoveActivity } from '../../hooks/useMoveActivity';
 import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
+import { toPlainDate } from '../../utils/toPlainDate';
 
 
 const TripPage = () => {
@@ -54,18 +55,14 @@ const TripPage = () => {
   const activities = useOptimisticActivities(trip.activities)
   
   // gets all banked activites by checking if activity has a starttime
-  const bankedActivities = activities.filter(a => !a.startTime)
+  const bankedActivities = activities.filter(a => !isScheduled(a))
+  const scheduledActivites = activities.filter(isScheduled)
   
-  const activitiesOn = (date: Temporal.PlainDate) => activities
-        .filter(isScheduled)
-        .filter(a => Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate().equals(date));
+  const activitiesOn = (date: Temporal.PlainDate) => scheduledActivites.filter(a => toPlainDate(a.startTime).equals(date))
 
-
-  const handleDragEnd = (e: DragEndEvent) => {
-    if (e.canceled) return
-
-    const { source, target } = e.operation
-    if (!source || !target) return
+  const handleDragEnd = ({ canceled, operation }: DragEndEvent) => {
+    const { source, target } = operation
+    if (canceled || !source || !target) return
 
     const {activity} = source.data as ActivityDragData
 
