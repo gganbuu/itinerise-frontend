@@ -58,7 +58,6 @@ const TripPage = () => {
   // gets all banked activites by checking if activity has a starttime
   const bankedActivities = activities.filter(a => !isScheduled(a))
   const scheduledActivites = activities.filter(isScheduled)
-  
   const activitiesOn = (date: Temporal.PlainDate) => scheduledActivites.filter(a => toPlainDate(a.startTime).equals(date))
 
   const handleDragEnd = ({ canceled, operation }: DragEndEvent) => {
