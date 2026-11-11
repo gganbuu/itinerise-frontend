@@ -1,5 +1,5 @@
 // libraries
-import { useLoaderData, Link, useFetchers, useSearchParams } from 'react-router'
+import { useLoaderData, Link, useSearchParams } from 'react-router'
 import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
 import { Temporal } from 'temporal-polyfill';
 // components
@@ -20,9 +20,9 @@ import type { Activity, ActivityDragData } from '../../types/types';
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
 import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
-import { MOVE_ACTIVITY_INTENT} from '../../constants/calendar';
 import { getDropDestination } from './getDropDestination';
 import { useMoveActivity } from '../../hooks/useMoveActivity';
+import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
 
 
 const TripPage = () => {
@@ -44,7 +44,6 @@ const TripPage = () => {
 
 
   const moveActivity = useMoveActivity()  // submit hook for submitting data without form 
-  const fetchers = useFetchers() // for exposing requests that are still in flight (optimistic loading)
   
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
@@ -52,37 +51,11 @@ const TripPage = () => {
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
   //optimistic ui
-  const getPendingMoves = (): Record<string, string | null> => {
-    const pendingMoves: Record<string, string | null> = {}
-    
-    for (const fetcher of fetchers)  {
-      const formData = fetcher.formData
-      if (formData?.get('intent') !== MOVE_ACTIVITY_INTENT) continue
-
-      const activityId = formData.get('activityId')
-      const startTime = formData.get('startTime')
-      
-      if (typeof activityId !== 'string') continue
-
-      pendingMoves[activityId] = typeof startTime === 'string' && startTime !== '' ? startTime: null
-    }
-
-    return pendingMoves
-
-  }
-
-  const pendingMoves = getPendingMoves()
-
-  const activities = trip.activities.map(a => 
-    String(a.id) in pendingMoves ? { ...a, startTime: pendingMoves[a.id]} : a
-  )
+  const activities = useOptimisticActivities(trip.activities)
   
   // gets all banked activites by checking if activity has a starttime
   const activitiesBanked = activities.filter(a => !a.startTime)
   
-  // gets all activites on a specific date, checking if:
-  // - activity has a start time 
-  // - a.startTime is the same date as date.to datestring
   const activitiesCalendared = (date: Temporal.PlainDate) => activities
         .filter(isScheduled)
         .filter(a => Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate().equals(date));
