@@ -16,8 +16,8 @@ const ActivityBank = ({activities, openDeleteModal}: ActivityBankProps) => {
     })
     return (
         <div className={styles.container} ref={ref}>
-            <p className={styles.containerSubtitle}>ACTIVTY BANK</p>
-            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity} onTrashClick={() => openDeleteModal(activity)}/>)}
+            <p className={styles.containerSubtitle}>ACTIVITY BANK</p>
+            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity} onTrashClick={openDeleteModal}/>)}
         </div>
     )
 }
