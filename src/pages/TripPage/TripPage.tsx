@@ -54,9 +54,9 @@ const TripPage = () => {
   const activities = useOptimisticActivities(trip.activities)
   
   // gets all banked activites by checking if activity has a starttime
-  const activitiesBanked = activities.filter(a => !a.startTime)
+  const bankedActivities = activities.filter(a => !a.startTime)
   
-  const activitiesCalendared = (date: Temporal.PlainDate) => activities
+  const activitiesOn = (date: Temporal.PlainDate) => activities
         .filter(isScheduled)
         .filter(a => Temporal.Instant.from(a.startTime).toZonedDateTimeISO('UTC').toPlainDate().equals(date));
 
@@ -81,7 +81,7 @@ const TripPage = () => {
   }
 
   return (
-    <DragDropProvider onDragEnd={(e) => handleDragEnd(e)}>
+    <DragDropProvider onDragEnd={handleDragEnd}>
       <div className={styles.tripPageWrapper}>
         <NavBar>
           <div className={styles.navLinks}>
@@ -110,14 +110,14 @@ const TripPage = () => {
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
               </div>
-              <ActivityBank activities={activitiesBanked} openDeleteModal={openDeleteModal}/>
+              <ActivityBank activities={bankedActivities} openDeleteModal={openDeleteModal}/>
             </aside>
 
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
                 {dates.map(date => <CalendarColumn key={date.toString()} 
                                                   date={date}
-                                                  activities={activitiesCalendared(date)}
+                                                  activities={activitiesOn(date)}
                                                   openDeleteModal={openDeleteModal}/>)}
               </div>
             </aside>
