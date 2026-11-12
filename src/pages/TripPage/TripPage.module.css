@@ -51,6 +51,31 @@
     border-radius: 10px;
 }
 
+.categoriesContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.categoryNameContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px;
+    gap: 5px;
+}
+
+.categoryNameContainer p {
+    font-size: small;
+    font-weight: var(--body-m)
+}
+
+.circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 10px;
+}
+
+
 .calendarContainer {
     flex: 1;
     display: flex;
@@ -76,4 +101,26 @@
     /* grid-template-rows: 1000px; */
 }
 
+.orange {
+    background-color: #ffdab4;
+}
 
+.blue {
+    background-color: #bed5ff;
+}
+
+.green { 
+    background-color: #c9e4c0;
+}
+
+.pink {
+    background-color: #ffcbe0;
+}
+
+.purple {
+    background-color: #dccce9;
+}
+
+.gray {
+    background-color: var(--gray-300);
+}
