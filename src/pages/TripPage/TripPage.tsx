@@ -109,8 +109,7 @@ const TripPage = () => {
               <PageButton name="New Activity" onClick={openActivityModal}/>
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
-
-
+      
                 <div className={styles.categoriesContainer}>
                   <div className={styles.categoryNameContainer}>
                     <div className={`${styles.circle} ${styles.blue}`}></div>
