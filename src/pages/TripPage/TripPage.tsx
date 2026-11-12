@@ -131,10 +131,6 @@ const TripPage = () => {
                     <div className={`${styles.circle} ${styles.purple}`}></div>
                     <p>Travel</p>
                   </div>
-                  <div className={styles.categoryNameContainer}>
-                    <div className={`${styles.circle} ${styles.gray}`}></div>
-                    <p>Other</p>
-                  </div>
                 </div>
 
               </div>
