@@ -50,7 +50,6 @@ const TripPage = () => {
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
 
-  const categories: String[] = [...new Set(trip.activities.map(a => a.category))]
 
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
