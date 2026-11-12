@@ -50,6 +50,7 @@ const TripPage = () => {
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
 
+
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
   //optimistic ui
@@ -96,7 +97,6 @@ const TripPage = () => {
         </NavBar>
 
         <main className={styles.tripPageMain}>
-          
           <header className={styles.headingAndButton}>
             <h2>{trip.name}</h2>
             <button>Week</button>
@@ -108,6 +108,30 @@ const TripPage = () => {
               <PageButton name="New Activity" onClick={openActivityModal}/>
               <div className={styles.container}>
                 <p className={styles.containerSubtitle}>CATEGORIES</p>
+      
+                <div className={styles.categoriesContainer}>
+                  <div className={styles.categoryNameContainer}>
+                    <div className={`${styles.circle} ${styles.blue}`}></div>
+                    <p>Activity</p>
+                  </div>
+                  <div className={styles.categoryNameContainer}>
+                    <div className={`${styles.circle} ${styles.orange}`}></div>
+                    <p>Food</p>
+                  </div>
+                  <div className={styles.categoryNameContainer}>
+                    <div className={`${styles.circle} ${styles.green}`}></div>
+                    <p>Exploring</p>
+                  </div>
+                  <div className={styles.categoryNameContainer}>
+                    <div className={`${styles.circle} ${styles.pink}`}></div>
+                    <p>Shopping</p>
+                  </div>
+                  <div className={styles.categoryNameContainer}>
+                    <div className={`${styles.circle} ${styles.purple}`}></div>
+                    <p>Travel</p>
+                  </div>
+                </div>
+
               </div>
               <ActivityBank activities={bankedActivities} openDeleteModal={openDeleteModal}/>
             </aside>

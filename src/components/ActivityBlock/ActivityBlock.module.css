@@ -2,9 +2,9 @@
     position: relative;
     display: flex;
     flex-direction: column;
-
-    background-color: var(--blue-200);
-    border: 1px solid var(--blue-400);
+    
+    /* border: 1px solid var(--blue-800); */
+    
     border-radius: 5px;
     font-size: 12px;
     padding: 4px 8px;
@@ -29,4 +29,24 @@
 
 .activityDescription { 
     font-weight: var(--body-m);
+}
+
+.activityStyle {
+    background-color: var(--pas-blue);
+}
+
+.exploringStyle {
+    background-color: var(--pas-green);
+}
+
+.foodStyle {
+    background-color: var(--pas-orange);
+}
+
+.shoppingStyle {
+    background-color: var(--pas-pink);
+}
+
+.travelStyle {
+    background-color: var(--pas-purple);
 }
