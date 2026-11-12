@@ -66,7 +66,7 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
         {timeInterval && (<p>{timeInterval}</p>)}
         <h3>{activity.name}</h3>
         <p className={styles.activityDescription}>{activity.description}</p>
-        <p className={styles.activityDuration}>{activity.durationMinutes} mins</p>
+        {!timeInterval && <p className={styles.activityDuration}>{activity.durationMinutes} mins</p>}
         {hoverState && <Trash onClick={() => onTrashClick(activity)} className={styles.trashButton}/>}
     </div>
   )
