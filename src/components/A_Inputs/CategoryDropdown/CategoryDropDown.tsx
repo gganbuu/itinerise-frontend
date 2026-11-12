@@ -13,7 +13,6 @@ const CategoryDropdown = ({id, required = true}: CategoryDropDownProps) => {
         <option value="exploring">Exploring</option>
         <option value="shopping">Shopping</option>
         <option value="travel">Travel</option>
-        <option value="other">Other</option>
     </select>
   )
 }
