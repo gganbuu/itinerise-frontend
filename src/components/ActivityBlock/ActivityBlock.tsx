@@ -25,8 +25,28 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
     type: ACTIVITY_DRAG_TYPE,
     data: dragData,
   })
+
+  const getCategoryStyle = (category: string) => {
+    switch (category) {
+      case 'activity':
+        return styles.activityStyle;
+      case 'exploring':
+        return styles.exploringStyle;
+      case 'food':
+        return styles.foodStyle;
+      case 'shopping':
+        return styles.shoppingStyle;
+      case 'travel':
+        return styles.travelStyle;
+      default: 
+        return styles.activityStyle;
+    }
+  }
+
+  const categoryStyle = getCategoryStyle(activity.category) 
+
   return (
-    <div className={styles.activityContainer} ref={ref} style={style} onMouseEnter={handleHoverOn} onMouseLeave={handleHoverOff}>
+    <div className={`${styles.activityContainer} ${categoryStyle}`} ref={ref} style={style} onMouseEnter={handleHoverOn} onMouseLeave={handleHoverOff}>
         <h3>{activity.name}</h3>
         <p className={styles.activityDescription}>{activity.description}</p>
         <p className={styles.activityDuration}>{activity.durationMinutes} mins</p>
