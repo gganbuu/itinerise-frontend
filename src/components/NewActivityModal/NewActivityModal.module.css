@@ -1,7 +1,7 @@
 .newTripModal {
     position: fixed;
     inset: 0;            /* replaces top/left/width/height */
-    z-index: 1;
+    z-index: 4;
     overflow-y: auto;    /* lets a tall modal scroll inside the overlay */
     background-color: rgba(0,0,0,0.4);
 }
