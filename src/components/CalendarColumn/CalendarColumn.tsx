@@ -5,7 +5,7 @@ import { getStartMinutes } from '../../utils/getStartMinutes'
 import { minutesToGridRow, durationToRowSpan } from '../../utils/calendarGrid'
 import type { Temporal } from 'temporal-polyfill'
 import type { Activity, ScheduledActivity } from '../../types/types'
-import { SLOT_MINUTES, SLOTS_PER_DAY } from '../../constants/calendar'
+import { SLOT_HEIGHT_PX, SLOT_MINUTES, SLOTS_PER_DAY } from '../../constants/calendar'
 
 interface CalendarColumnProps { 
     date: Temporal.PlainDate;
@@ -23,7 +23,7 @@ const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps
                 <p>{dayOfTheWeek}</p>
                 <h4>{shortDate}</h4>
             </div>
-            <div className={styles.timeColumn} style={{ gridTemplateRows: `repeat(${SLOTS_PER_DAY}, 16px)`}}>
+            <div className={styles.timeColumn} style={{ gridTemplateRows: `repeat(${SLOTS_PER_DAY}, ${SLOT_HEIGHT_PX}px)`}}>
                 {Array.from({length: SLOTS_PER_DAY}, (_, i) => <CalendarTimeSlot key={i} date={date} startMinutes={i * SLOT_MINUTES}/>)}
 
                 {activities.map(a => {

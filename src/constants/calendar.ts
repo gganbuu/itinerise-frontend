@@ -1,6 +1,7 @@
 // one calendar row represents SLOT_MINUTES; a day column holds 24 hours of rows
 export const SLOT_MINUTES = 15;
 export const SLOTS_PER_DAY = (24 * 60) / SLOT_MINUTES
+export const SLOT_HEIGHT_PX = 16
 
 // dnd-kit library identifiers shared by draggables, droppables and drag end handler
 export const ACTIVITY_BANK_ID = 'activityBank';

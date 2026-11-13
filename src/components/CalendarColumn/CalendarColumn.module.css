@@ -9,7 +9,11 @@
 .calendarDayHeading {
     display: flex;
     flex-direction: column;
-    align-items: center;    
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background-color: white;
 }
 
 .timeColumn {
