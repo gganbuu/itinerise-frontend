@@ -34,7 +34,7 @@
     flex-direction: column;
     width: 300px;
     gap: 1rem;
-    position: sticky;
+    position: sticky;   
     top: 1rem;
     align-self: flex-start;
 }
@@ -89,6 +89,7 @@
     background-color: #FFFFFF;
     border: 1px solid var(--gray-300);
     border-radius: 10px;
+    max-height: calc(100vh - 4rem);
 }
 
 .containerSubtitle {
