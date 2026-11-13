@@ -12,6 +12,7 @@ import NewActivityModal from '../../components/NewActivityModal/NewActivityModal
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
+import TimeGutter from '../../components/TimeGutter/TimeGutter';
 
 import type { Activity, ActivityDragData } from '../../types/types';
 
@@ -138,6 +139,7 @@ const TripPage = () => {
 
             <aside className={styles.calendarContainer}>
               <div className={styles.calendarGrid}>
+                <TimeGutter/>
                 {dates.map(date => <CalendarColumn key={date.toString()} 
                                                   date={date}
                                                   activities={activitiesOn(date)}
