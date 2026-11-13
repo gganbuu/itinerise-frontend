@@ -19,6 +19,13 @@
     background-color: white;
 }
 
+.calendarDayHeading {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background-color: white;
+}
+
 .calendarDayHeading * {
     color: white;   
 }
