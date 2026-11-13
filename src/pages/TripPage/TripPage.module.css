@@ -98,8 +98,7 @@
     display: grid;
     grid-auto-flow: column;
     flex: 1;
-    grid-template-columns: 180px;
-    /* grid-template-rows: 1000px; */
+    grid-template-columns: max-content;
 }
 
 .orange {
