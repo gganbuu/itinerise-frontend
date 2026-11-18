@@ -1,6 +1,6 @@
 import type { Temporal } from "temporal-polyfill"
 import type { IsoInstant} from "../types/types"
-import { SLOT_MINUTES } from "../constants/calendar"
+import { SLOT_HEIGHT_PX, SLOT_MINUTES, SLOTS_PER_DAY } from "../constants/calendar"
 
 // css grid rows are 1-indexed and each row is constant
 export const minutesToGridRow = (minutes: number): number => {
@@ -23,4 +23,14 @@ export function slotStartTime(date: Temporal.PlainDate, startMinutes: number): I
         .toZonedDateTime('UTC')
         .toInstant()
         .toString()
+}
+
+// pixel offset from the top of a day column --> naerest slot index, clamped to day
+export function offsetToSlotIndex(offsetPx: number): number {
+    const slot = Math.round(offsetPx / SLOT_HEIGHT_PX)
+    return Math.min(Math.max(slot, 0), SLOTS_PER_DAY - 1)
+}
+
+export function fitsInDay(startMinutes: number, durationMinutes: number): boolean {
+    return startMinutes >= 0 && startMinutes + durationMinutes <= 24 * 60;
 }
