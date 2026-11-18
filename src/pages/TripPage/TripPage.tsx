@@ -26,7 +26,8 @@ import { useMoveActivity } from '../../hooks/useMoveActivity';
 import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
 import { toPlainDate } from '../../utils/toPlainDate';
 import { findOverlappingActivity } from '../../utils/findOverlappingActivity';
-
+import { fitsInDay } from '../../utils/calendarGrid';
+import { getStartMinutes } from '../../utils/getStartMinutes';
 
 const TripPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -75,6 +76,9 @@ const TripPage = () => {
       moveActivity(activity, null)
       return
     }
+
+    if (!fitsInDay(getStartMinutes(destination.startTime), activity.durationMinutes)) return
+
     const overlapping = findOverlappingActivity(activity, destination.startTime, activities)
     if (overlapping) return
 
