@@ -3,7 +3,7 @@ import styles from './ActivityBlock.module.css'
 import { useDraggable } from '@dnd-kit/react'
 import type { Activity, ActivityDragData } from '../../types/types'
 import { Trash } from 'lucide-react';
-import { ACTIVITY_DRAG_TYPE } from '../../constants/calendar';
+import { ACTIVITY_DRAG_TYPE, SLOT_HEIGHT_PX, SLOT_MINUTES } from '../../constants/calendar';
 import { Temporal } from 'temporal-polyfill';
 
 interface ActivityBlockProps {
@@ -14,14 +14,14 @@ interface ActivityBlockProps {
 
 const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
   const [hoverState, setHoverState] = useState<boolean>(false)
-  const dragData: ActivityDragData = { activity }
+  const dragData: ActivityDragData = { activity } 
   const handleHoverOn = () => {
     setHoverState(true)
   }
   const handleHoverOff = () => {
     setHoverState(false)
   }
-  const { ref } = useDraggable({
+  const { ref, isDragging } = useDraggable({
     id: activity.id,
     type: ACTIVITY_DRAG_TYPE,
     data: dragData,
@@ -57,12 +57,14 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
     return interval;
   }
 
+  const draggedStyle = isDragging ? {height: activity.durationMinutes / SLOT_MINUTES * SLOT_HEIGHT_PX, width: `180px`} : {};
+
   const timeInterval = getTimeInterval(activity)
 
   const categoryStyle = getCategoryStyle(activity.category) 
 
   return (
-    <div className={`${styles.activityContainer} ${categoryStyle}`} ref={ref} style={style} onMouseEnter={handleHoverOn} onMouseLeave={handleHoverOff}>
+    <div className={`${styles.activityContainer} ${categoryStyle}`} ref={ref} style={{...style, ...draggedStyle}} onMouseEnter={handleHoverOn} onMouseLeave={handleHoverOff}>
         {timeInterval && (<p>{timeInterval}</p>)}
         <h3>{activity.name}</h3>
         <p className={styles.activityDescription}>{activity.description}</p>
