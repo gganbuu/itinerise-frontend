@@ -5,6 +5,7 @@ import type { Activity, ActivityDragData } from '../../types/types'
 import { Trash } from 'lucide-react';
 import { ACTIVITY_DRAG_TYPE, SLOT_HEIGHT_PX, SLOT_MINUTES } from '../../constants/calendar';
 import { getTimeInterval } from '../../utils/getTimeInterval';
+import { durationToRowSpan } from '../../utils/calendarGrid';
 
 interface ActivityBlockProps {
   activity: Activity;
@@ -44,7 +45,7 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
     }
   }
 
-  const draggedStyle = isDragging ? {height: activity.durationMinutes / SLOT_MINUTES * SLOT_HEIGHT_PX, width: `180px`} : {};
+  const draggedStyle = isDragging ? {height: durationToRowSpan(activity.durationMinutes) * SLOT_HEIGHT_PX, width: `180px`} : {};
 
   const timeInterval = getTimeInterval(activity.startTime, activity.durationMinutes)
 
