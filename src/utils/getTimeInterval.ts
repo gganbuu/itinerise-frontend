@@ -1,13 +1,12 @@
 import { Temporal } from "temporal-polyfill"
-import type { Activity } from "../types/types"
+import type { Activity, IsoInstant } from "../types/types"
 
-export const getTimeInterval = (activity: Activity): string | null => { 
-    if (!activity.startTime) return null
-    const startTime = Temporal.Instant.from(activity.startTime)
+export const getTimeInterval = (isoString: IsoInstant, durationMinutes: number): string | null => { 
+    const startTime = Temporal.Instant.from(isoString)
                                       .toZonedDateTimeISO('UTC')
                                       .toLocaleString('en-AU', { timeStyle: 'short' })
-    const endTime = Temporal.Instant.from(activity.startTime)
-                                    .add({minutes: activity.durationMinutes})
+    const endTime = Temporal.Instant.from(isoString)
+                                    .add({minutes: durationMinutes})
                                     .toZonedDateTimeISO('UTC')
                                     .toLocaleString('en-AU', { timeStyle: 'short' })
     const interval = `${startTime} - ${endTime}`

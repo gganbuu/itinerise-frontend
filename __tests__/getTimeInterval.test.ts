@@ -15,7 +15,7 @@ describe("getTimeInterval test cases", () => {
             cost: '50',
             description: 'description'
         }
-        expect(getTimeInterval(activity)).toBe('12:00 pm - 1:00 pm')
+        expect(getTimeInterval(activity.startTime, activity.durationMinutes)).toBe('12:00 pm - 1:00 pm')
     })
     test("start time 18, duration 2hr", () => {
         const activity = {
@@ -29,7 +29,7 @@ describe("getTimeInterval test cases", () => {
             cost: '50',
             description: 'description'
         }
-        expect(getTimeInterval(activity)).toBe('6:00 pm - 8:00 pm')
+        expect(getTimeInterval(activity.startTime, activity.durationMinutes)).toBe('6:00 pm - 8:00 pm')
     })
     
 })
