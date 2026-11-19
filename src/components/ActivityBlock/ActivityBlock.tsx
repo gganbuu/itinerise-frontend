@@ -46,7 +46,7 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
 
   const draggedStyle = isDragging ? {height: activity.durationMinutes / SLOT_MINUTES * SLOT_HEIGHT_PX, width: `180px`} : {};
 
-  const timeInterval = getTimeInterval(activity)
+  const timeInterval = getTimeInterval(activity.startTime, activity.durationMinutes)
 
   const categoryStyle = getCategoryStyle(activity.category) 
 
