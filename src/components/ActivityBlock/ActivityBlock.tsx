@@ -3,7 +3,7 @@ import styles from './ActivityBlock.module.css'
 import { useDraggable } from '@dnd-kit/react'
 import type { Activity, ActivityDragData } from '../../types/types'
 import { Trash } from 'lucide-react';
-import { ACTIVITY_DRAG_TYPE, SLOT_HEIGHT_PX, SLOT_MINUTES } from '../../constants/calendar';
+import { ACTIVITY_DRAG_TYPE, SLOT_HEIGHT_PX } from '../../constants/calendar';
 import { getTimeInterval } from '../../utils/getTimeInterval';
 import { durationToRowSpan } from '../../utils/calendarGrid';
 

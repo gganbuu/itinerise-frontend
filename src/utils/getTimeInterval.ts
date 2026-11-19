@@ -1,5 +1,5 @@
 import { Temporal } from "temporal-polyfill"
-import type { Activity, IsoInstant } from "../types/types"
+import type { IsoInstant } from "../types/types"
 
 export const getTimeInterval = (isoString: IsoInstant | null, durationMinutes: number): string | null => { 
     if (!isoString) return null
