@@ -4,7 +4,7 @@ import { useDraggable } from '@dnd-kit/react'
 import type { Activity, ActivityDragData } from '../../types/types'
 import { Trash } from 'lucide-react';
 import { ACTIVITY_DRAG_TYPE, SLOT_HEIGHT_PX, SLOT_MINUTES } from '../../constants/calendar';
-import { Temporal } from 'temporal-polyfill';
+import { getTimeInterval } from '../../utils/getTimeInterval';
 
 interface ActivityBlockProps {
   activity: Activity;
@@ -42,19 +42,6 @@ const ActivityBlock = ({activity, style, onTrashClick}: ActivityBlockProps) => {
       default: 
         return styles.activityStyle;
     }
-  }
-
-  const getTimeInterval = (activity: Activity): string | null => { 
-    if (!activity.startTime) return null
-    const startTime = Temporal.Instant.from(activity.startTime)
-                                      .toZonedDateTimeISO('UTC')
-                                      .toLocaleString('en-AU', { timeStyle: 'short' })
-    const endTime = Temporal.Instant.from(activity.startTime)
-                                    .add({minutes: activity.durationMinutes})
-                                    .toZonedDateTimeISO('UTC')
-                                    .toLocaleString('en-AU', { timeStyle: 'short' })
-    const interval = `${startTime} - ${endTime}`
-    return interval;
   }
 
   const draggedStyle = isDragging ? {height: activity.durationMinutes / SLOT_MINUTES * SLOT_HEIGHT_PX, width: `180px`} : {};
