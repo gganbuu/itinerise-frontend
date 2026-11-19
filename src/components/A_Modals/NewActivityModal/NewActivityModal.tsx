@@ -1,11 +1,11 @@
 import styles from "./NewActivityModal.module.css"
 import { Form, useActionData } from "react-router"
-import TextInput from "../A_Inputs/TextInput/TextInput"
-import NumberInput from "../A_Inputs/NumberInput/NumberInput"
-import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton"
-import PageButton from "../A_Buttons/PageButton/PageButton"
-import type { newTripPageAction } from "../../pages/TripPage/tripPageActions"
-import CategoryDropdown from "../A_Inputs/CategoryDropdown/CategoryDropDown"
+import TextInput from "../../A_Inputs/TextInput/TextInput"
+import NumberInput from "../../A_Inputs/NumberInput/NumberInput"
+import SecondaryButton from "../../A_Buttons/SecondaryButton/SecondaryButton"
+import PageButton from "../../A_Buttons/PageButton/PageButton"
+import type { newTripPageAction } from "../../../pages/TripPage/tripPageActions"
+import CategoryDropdown from "../../A_Inputs/CategoryDropdown/CategoryDropDown"
 
 interface NewActivityModalProps {
     onClose: () => void;
