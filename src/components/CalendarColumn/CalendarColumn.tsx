@@ -6,6 +6,7 @@ import { minutesToGridRow, durationToRowSpan } from '../../utils/calendarGrid'
 import type { Temporal } from 'temporal-polyfill'
 import type { Activity, ScheduledActivity } from '../../types/types'
 import { SLOT_HEIGHT_PX, SLOT_MINUTES, SLOTS_PER_DAY } from '../../constants/calendar'
+import DropPreview from '../DropPreview/DropPreview'
 
 interface CalendarColumnProps { 
     date: Temporal.PlainDate;
@@ -38,6 +39,7 @@ const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps
                         />
                     )
                 })}
+                <DropPreview date={date} activities={activities} />
             </div>
         </div>
     )

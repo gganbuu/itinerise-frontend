@@ -1,5 +1,5 @@
 import { SLOT_MINUTES } from "../src/constants/calendar";
-import {minutesToGridRow, durationToRowSpan, slotStartTime} from "../src/utils/calendarGrid";
+import {minutesToGridRow, durationToRowSpan, slotStartTime, offsetToSlotIndex, fitsInDay} from "../src/utils/calendarGrid";
 import { Temporal } from "temporal-polyfill";
 
 describe("minutesToGridRow tests", () => {
@@ -29,4 +29,43 @@ describe("slotStartTime", () => {
         const plainDate = Temporal.PlainDate.from('2026-12-31')
         expect(slotStartTime(plainDate, 24*60 + 10)).toBe('2027-01-01T00:10:00Z')
     })
+})
+
+describe("offsetToSlotIndex test", () => {
+    test("offsetPx = 0", () => {
+        const offsetPx = 0;
+        expect(offsetToSlotIndex(offsetPx)).toBe(0)
+    })
+    test("offsetPx = 7", () => {
+        const offsetPx = 7;
+        expect(offsetToSlotIndex(offsetPx)).toBe(0)
+    })
+    test("offsetPx = 8", () => {
+        const offsetPx = 8;
+        expect(offsetToSlotIndex(offsetPx)).toBe(1)
+    })
+    test("offsetPx = 32", () => {
+        const offsetPx = 32;
+        expect(offsetToSlotIndex(offsetPx)).toBe(2)
+    })
+})
+
+describe("fitsInDay test", () => {
+    test("test 1", () => {
+        const startMinutes = 0; 
+        const durationMinutes = 60;
+        expect(fitsInDay(startMinutes, durationMinutes)).toBe(true)
+    })
+    test("test 2", () => {
+        const startMinutes = 0; 
+        const durationMinutes = 60;
+        expect(fitsInDay(startMinutes, durationMinutes)).toBe(true)
+    })
+    test("test 3", () => {
+        const hours23ToMinutes = 60 * 23
+        const startMinutes = hours23ToMinutes; 
+        const durationMinutes = 120;
+        expect(fitsInDay(startMinutes, durationMinutes)).toBe(false)
+    })
+    
 })

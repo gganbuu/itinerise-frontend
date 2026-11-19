@@ -25,8 +25,7 @@ import { getDropDestination } from './getDropDestination';
 import { useMoveActivity } from '../../hooks/useMoveActivity';
 import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';
 import { toPlainDate } from '../../utils/toPlainDate';
-import { findOverlappingActivity } from '../../utils/findOverlappingActivity';
-
+import { canDropAt } from '../../utils/canDropAt';
 
 const TripPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,8 +49,6 @@ const TripPage = () => {
   
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
-
-
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
 
   //optimistic ui
@@ -75,8 +72,8 @@ const TripPage = () => {
       moveActivity(activity, null)
       return
     }
-    const overlapping = findOverlappingActivity(activity, destination.startTime, activities)
-    if (overlapping) return
+
+    if (!canDropAt(activity, destination.startTime, activities)) return
 
     moveActivity(activity, destination.startTime)
   }

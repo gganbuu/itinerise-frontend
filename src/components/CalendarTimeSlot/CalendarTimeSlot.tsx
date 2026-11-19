@@ -4,7 +4,7 @@ import type { Temporal } from 'temporal-polyfill'
 import type { TimeSlotData } from '../../types/types'
 import { ACTIVITY_DRAG_TYPE, TIME_SLOT_DROP_TYPE } from '../../constants/calendar';
 import { minutesToGridRow, slotStartTime } from '../../utils/calendarGrid';
-
+import { slotTopEdgeCollision } from '../../utils/slotTopEdgeCollision';
 interface CalendarTimeSlotProps {
     date: Temporal.PlainDate;
     startMinutes: number;
@@ -15,7 +15,8 @@ const CalendarTimeSlot = ({date, startMinutes}: CalendarTimeSlotProps) => {
     const { ref } = useDroppable({
         id: `${date.toString()}-${startMinutes}`,
         type: TIME_SLOT_DROP_TYPE,
-        accept: ACTIVITY_DRAG_TYPE,
+        accept: ACTIVITY_DRAG_TYPE, 
+        collisionDetector: slotTopEdgeCollision,
         data
     })
     const isHourStart = startMinutes % 60 === 0
