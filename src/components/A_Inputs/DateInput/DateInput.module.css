@@ -1,6 +1,8 @@
 .dateInput {
     width: 100%;
     font-weight: var(--body-m);
+    padding: var(--text-input-padding)
+    
 }
 
 /* No value picked yet: grey out the browser's dd/mm/yyyy hint */

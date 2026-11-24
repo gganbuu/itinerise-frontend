@@ -1,4 +1,5 @@
 .textInput {
     width: 100%;
     font-weight: var(--body-m);
+    padding: var(--text-input-padding)
 }

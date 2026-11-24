@@ -1,6 +1,6 @@
 .searchBar {
-    padding: 0.5rem 0.8rem;
     border: 1px solid var(--gray-400);
     border-radius: 5px;
     color: var(--gray-400);
+    padding: var(--text-input-padding)
 }
