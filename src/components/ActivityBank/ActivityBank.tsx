@@ -7,9 +7,10 @@ import { ACTIVITY_BANK_ID, ACTIVITY_DRAG_TYPE } from '../../constants/calendar'
 interface ActivityBankProps {
     activities: Activity[];
     openDeleteModal: (activity: Activity) => void;
+    openEditModal: (activity: Activity) => void;
 }
 
-const ActivityBank = ({activities, openDeleteModal}: ActivityBankProps) => {
+const ActivityBank = ({activities, openDeleteModal, openEditModal}: ActivityBankProps) => {
     const { ref } = useDroppable({
         id: ACTIVITY_BANK_ID,
         accept: ACTIVITY_DRAG_TYPE,
@@ -17,7 +18,7 @@ const ActivityBank = ({activities, openDeleteModal}: ActivityBankProps) => {
     return (
         <div className={styles.container} ref={ref}>
             <p className={styles.containerSubtitle}>ACTIVITY BANK</p>
-            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity} onTrashClick={openDeleteModal}/>)}
+            {activities.map(activity => <ActivityBlock key={activity.id} activity={activity} onTrashClick={openDeleteModal} onMoreClick={openEditModal}/>)}
         </div>
     )
 }

@@ -12,9 +12,10 @@ interface CalendarColumnProps {
     date: Temporal.PlainDate;
     activities: ScheduledActivity[];
     openDeleteModal: (activity: Activity) => void;
+    openEditModal: (activity: Activity) => void;
 }
 
-const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps) => {
+const CalendarColumn = ({date, activities, openDeleteModal, openEditModal}: CalendarColumnProps) => {
     const dayOfTheWeek = date.toLocaleString('en-US', { weekday: 'short' })
     const shortDate = date.toString()
 
@@ -36,6 +37,8 @@ const CalendarColumn = ({date, activities, openDeleteModal}: CalendarColumnProps
                             activity={a}
                             style={{ gridRow: `${startRow} / span ${span}`, gridColumn: 1, zIndex: 1}}
                             onTrashClick={() => openDeleteModal(a)}
+                            onMoreClick={() => openEditModal(a)}
+                            
                         />
                     )
                 })}
