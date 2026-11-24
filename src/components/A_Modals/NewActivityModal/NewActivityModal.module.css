@@ -11,12 +11,11 @@
 }
 
 
-
 .newTripContainer {
     margin: 5% auto;
     border-radius: 10px;
     background-color: var(--bg-color);
-    width: 420px;
+    width: 500px;
 }
 
 .newTripTitleAndButton {
@@ -49,6 +48,7 @@
 .modalLabel {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 0.5rem;
 }
 
