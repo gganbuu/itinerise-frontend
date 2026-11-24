@@ -9,6 +9,7 @@ import { Logo } from '../../components/Logo/Logo';
 import FooterBar from '../../components/FooterBar/FooterBar';
 import PageButton from '../../components/A_Buttons/PageButton/PageButton';
 import NewActivityModal from '../../components/A_Modals/NewActivityModal/NewActivityModal';
+import EditActivityModal from '../../components/A_Modals/EditActivityModal/EditActivityModal';
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
@@ -31,9 +32,14 @@ const TripPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isNewActivityModalOpen = searchParams.has("newActivity")
   const isDeleteActivityModalOpen = searchParams.has("deleteActivity")
+  const isEditActivityModalOpen = searchParams.has("editActivity")
 
   const openDeleteModal = (activity: Activity) => {
     setSearchParams({deleteActivity: String(activity.id)})
+  }
+
+  const openEditModal = (activity: Activity) => {
+    setSearchParams({editActivity: String(activity.id)})
   }
 
   const openActivityModal = () => {
@@ -49,7 +55,9 @@ const TripPage = () => {
   
   const trip = useLoaderData<typeof tripLoader>();
   const dates: Temporal.PlainDate[] = getDaysFromTrip(trip.startDate, trip.endDate); //returns PlainDate[]
+
   const activityToDelete = trip.activities.find(activity => String(activity.id) == searchParams.get("deleteActivity"))
+  const activityToEdit = trip.activities.find(activity => String(activity.id) == searchParams.get("editActivity"))
 
   //optimistic ui
   const activities = useOptimisticActivities(trip.activities)
@@ -131,7 +139,7 @@ const TripPage = () => {
                 </div>
 
               </div>
-              <ActivityBank activities={bankedActivities} openDeleteModal={openDeleteModal}/>
+              <ActivityBank activities={bankedActivities} openDeleteModal={openDeleteModal} openEditModal={openEditModal}/>
             </aside>
 
             <aside className={styles.calendarContainer}>
@@ -140,7 +148,8 @@ const TripPage = () => {
                 {dates.map(date => <CalendarColumn key={date.toString()} 
                                                   date={date}
                                                   activities={activitiesOn(date)}
-                                                  openDeleteModal={openDeleteModal}/>)}
+                                                  openDeleteModal={openDeleteModal}
+                                                  openEditModal={openEditModal}/>)}
               </div>
             </aside>
           </main>
@@ -150,6 +159,8 @@ const TripPage = () => {
         {isNewActivityModalOpen && (<NewActivityModal onClose={closeActivityModal}/>)}
 
         {isDeleteActivityModalOpen && (<DeleteActivityModal activity={activityToDelete} onClose={closeActivityModal}/>)}
+
+        {isEditActivityModalOpen && (<EditActivityModal activity={activityToEdit} onClose={closeActivityModal}/>)}
 
         <FooterBar/>
       </div>
