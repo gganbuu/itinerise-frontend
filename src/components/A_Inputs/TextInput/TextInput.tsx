@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, ComponentProps, RefObject } from 'react'
+import type { ComponentProps } from 'react'
 import styles from './TextInput.module.css'
 
 interface TextInputProps extends Omit<ComponentProps<'input'>, 'type'> {

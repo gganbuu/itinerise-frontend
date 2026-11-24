@@ -7,7 +7,6 @@ import PageButton from "../../A_Buttons/PageButton/PageButton"
 import type { newTripPageAction } from "../../../pages/TripPage/tripPageActions"
 import CategoryDropdown from "../../A_Inputs/CategoryDropdown/CategoryDropDown"
 import TextArea from "../../A_Inputs/TextArea/TextArea"
-import { useRef } from "react"
 
 interface NewActivityModalProps {
     onClose: () => void;
