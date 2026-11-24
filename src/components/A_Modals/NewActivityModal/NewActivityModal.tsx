@@ -7,6 +7,7 @@ import PageButton from "../../A_Buttons/PageButton/PageButton"
 import type { newTripPageAction } from "../../../pages/TripPage/tripPageActions"
 import CategoryDropdown from "../../A_Inputs/CategoryDropdown/CategoryDropDown"
 import TextArea from "../../A_Inputs/TextArea/TextArea"
+import { useRef } from "react"
 
 interface NewActivityModalProps {
     onClose: () => void;
@@ -27,7 +28,7 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                 <hr />
                 <main className={styles.newTripMain}> 
                     <label className={styles.modalLabel} htmlFor="activityName">Activity name
-                        <TextInput id="activityName" name="name" placeholder="the best activity ever"/>
+                        <TextInput id="activityName" name="name" placeholder="the best activity ever" autoFocus/>
                     </label>
                     <div className={styles.twoColumn}>
                         <label className={styles.modalLabel} htmlFor="activityCategory">Category
