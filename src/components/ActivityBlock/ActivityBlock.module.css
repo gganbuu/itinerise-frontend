@@ -18,12 +18,23 @@
     color: var(--gray-800)
 }
 
+.activityButtonsContainer { 
+    position: absolute;
+    display: flex;
+    gap: 0.5rem;
+    top: 4px;
+    right: 8px;
+}
+
+.editButton {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
 .trashButton {
     width: 16px;
     height: 16px;
-    position: absolute;
-    top: 4px;
-    right: 8px;
     cursor: pointer;
 }
 
