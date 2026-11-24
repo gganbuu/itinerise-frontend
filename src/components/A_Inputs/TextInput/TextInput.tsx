@@ -1,23 +1,18 @@
-import type { ChangeEventHandler } from 'react'
+import type { ComponentProps } from 'react'
 import styles from './TextInput.module.css'
 
-interface TextInputProps {
+interface TextInputProps extends Omit<ComponentProps<'input'>, 'type'> {
   id: string,
-  placeholder?: string,
-  name: string,
-  onChange?: ChangeEventHandler<HTMLInputElement>,
-  required?: boolean;
+  name: string
 }
 
-const TextInput = ({id, placeholder, name, onChange, required}: TextInputProps) => {
+const TextInput = ({className, ...rest}: TextInputProps) => {
   return (
-    <input type='text'
-           id={id} 
-           name={name} 
-           placeholder={placeholder} 
-           onChange={onChange}
-           className={styles.textInput}
-           required={required}/>
+    <input
+          type="text"
+          className={`${styles.textInput} ${className ?? ''}`}
+          {...rest}
+        />
   )
 }
 

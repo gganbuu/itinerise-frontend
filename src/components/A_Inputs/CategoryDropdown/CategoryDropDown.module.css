@@ -1,3 +1,4 @@
 .categoryDropdown {
-    padding: 2px;
+    width: 100%;
+    padding: var(--text-input-padding)
 }

@@ -1,11 +1,12 @@
 import styles from "./NewActivityModal.module.css"
 import { Form, useActionData } from "react-router"
-import TextInput from "../A_Inputs/TextInput/TextInput"
-import NumberInput from "../A_Inputs/NumberInput/NumberInput"
-import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton"
-import PageButton from "../A_Buttons/PageButton/PageButton"
-import type { newTripPageAction } from "../../pages/TripPage/tripPageActions"
-import CategoryDropdown from "../A_Inputs/CategoryDropdown/CategoryDropDown"
+import TextInput from "../../A_Inputs/TextInput/TextInput"
+import NumberInput from "../../A_Inputs/NumberInput/NumberInput"
+import SecondaryButton from "../../A_Buttons/SecondaryButton/SecondaryButton"
+import PageButton from "../../A_Buttons/PageButton/PageButton"
+import type { newTripPageAction } from "../../../pages/TripPage/tripPageActions"
+import CategoryDropdown from "../../A_Inputs/CategoryDropdown/CategoryDropDown"
+import TextArea from "../../A_Inputs/TextArea/TextArea"
 
 interface NewActivityModalProps {
     onClose: () => void;
@@ -26,14 +27,14 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                 <hr />
                 <main className={styles.newTripMain}> 
                     <label className={styles.modalLabel} htmlFor="activityName">Activity name
-                        <TextInput id="activityName" name="name" placeholder="the best activity ever"/>
+                        <TextInput id="activityName" name="name" placeholder="the best activity ever" autoFocus/>
                     </label>
                     <div className={styles.twoColumn}>
                         <label className={styles.modalLabel} htmlFor="activityCategory">Category
                             <CategoryDropdown id="activityCategory"/>
                         </label>
                         <label className={styles.modalLabel} htmlFor="activityLocation">Location
-                            <TextInput id="activityLocation" name="location" placeholder="Timbuktoo" />
+                            <TextInput id="activityLocation" name="location" placeholder="Timbuktoo"/>
                         </label>
                     </div>
                     <div className={styles.twoColumn}>
@@ -45,7 +46,7 @@ const NewActivityModal = ({onClose}: NewActivityModalProps) => {
                         </label>
                     </div>
                     <label className={styles.modalLabel} htmlFor="activityDescription">Description
-                        <TextInput id="activityDescription" name="description" placeholder="the best activity ever"/>
+                        <TextArea id="activityDescription" name="description" placeholder="the best activity ever"/>
                     </label>
 
                 </main>

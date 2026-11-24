@@ -1,9 +1,9 @@
 import styles from "./DeleteActivityModal.module.css"
-import type { Activity } from "../../types/types";
-import type { newTripPageAction } from "../../pages/TripPage/tripPageActions";
+import type { Activity } from "../../../types/types";
+import type { newTripPageAction } from "../../../pages/TripPage/tripPageActions";
 import { useActionData, Form } from "react-router";
-import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton";
-import PageButton from "../A_Buttons/PageButton/PageButton";
+import SecondaryButton from "../../A_Buttons/SecondaryButton/SecondaryButton";
+import PageButton from "../../A_Buttons/PageButton/PageButton";
 
 interface DeleteActivityModalProps {
     activity: Activity | undefined;

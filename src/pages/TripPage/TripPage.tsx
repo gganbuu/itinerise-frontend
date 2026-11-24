@@ -8,7 +8,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import { Logo } from '../../components/Logo/Logo';
 import FooterBar from '../../components/FooterBar/FooterBar';
 import PageButton from '../../components/A_Buttons/PageButton/PageButton';
-import NewActivityModal from '../../components/NewActivityModal/NewActivityModal';
+import NewActivityModal from '../../components/A_Modals/NewActivityModal/NewActivityModal';
 import CalendarColumn from '../../components/CalendarColumn/CalendarColumn';
 import ActivityBank from '../../components/ActivityBank/ActivityBank';
 import type { tripLoader } from './tripLoader';
@@ -20,7 +20,7 @@ import type { Activity, ActivityDragData } from '../../types/types';
 //utility functions
 import getDaysFromTrip from '../../utils/getDaysFromTrip';
 import { isScheduled } from "../../utils/isScheduled"
-import DeleteActivityModal from '../../components/DeleteActivityModal/DeleteActivityModal';
+import DeleteActivityModal from '../../components/A_Modals/DeleteActivityModal/DeleteActivityModal';
 import { getDropDestination } from './getDropDestination';
 import { useMoveActivity } from '../../hooks/useMoveActivity';
 import { useOptimisticActivities } from '../../hooks/useOptimisticActivities';

@@ -1,9 +1,9 @@
 import { Form, useActionData } from "react-router"
-import type { myTripsPageAction } from "../../pages/MyTripsPage/myTripsPageAction";
+import type { myTripsPageAction } from "../../../pages/MyTripsPage/myTripsPageAction";
 import styles from "./DeleteTripModal.module.css"
-import PageButton from "../A_Buttons/PageButton/PageButton";
-import SecondaryButton from "../A_Buttons/SecondaryButton/SecondaryButton";
-import type { TripSummary } from "../../types/types";
+import PageButton from "../../A_Buttons/PageButton/PageButton";
+import SecondaryButton from "../../A_Buttons/SecondaryButton/SecondaryButton";
+import type { TripSummary } from "../../../types/types";
 
 interface DeleteTripModalProps {
     onClose: () => void;
