@@ -1,23 +1,22 @@
 import styles from './PageButton.module.css'
-import type { MouseEventHandler, ButtonHTMLAttributes } from 'react'
+import type { MouseEventHandler, ButtonHTMLAttributes, ComponentProps } from 'react'
 
-interface PageButtonProps {
+interface PageButtonProps extends Omit<ComponentProps<"button">, "type"> {
   name: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   intent?: string;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }
 
 const PageButton = ({name, 
-                     onClick,
                      type = "button",
-                     intent}: PageButtonProps) => {
+                     intent,
+                    ...rest}: PageButtonProps) => {
   return (
-    <button type={type} 
-            onClick={onClick} 
-            className={styles.pageButton} 
+    <button className={styles.pageButton} 
+            type={type}
             name={intent ? "intent" : undefined} 
-            value={intent}>
+            value={intent}
+            {...rest}>
         {name}
     </button>
   )
