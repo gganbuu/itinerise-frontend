@@ -1,25 +1,18 @@
 import styles from './NumberInput.module.css'
-import type { ChangeEventHandler } from 'react'
+import type { ComponentProps } from 'react'
 
-interface NumberInputProps {
-    id: string
-    placeholder?: string,
-    name: string,
-    onChange?: ChangeEventHandler<HTMLInputElement>,
-    required?: boolean;
-    step?: string;
+interface NumberInputProps extends Omit<ComponentProps<'input'>, 'type'> {
+  id: string,
+  name: string,
 }
 
-const NumberInput = ({id, name, placeholder, onChange, required = true, step = '1'}: NumberInputProps) => {
+const NumberInput = ({id, name, ...rest}: NumberInputProps) => {
   return (
     <input type='number'
-           id={id} 
-           name={name} 
-           placeholder={placeholder} 
-           onChange={onChange}
-           className={styles.numberInput}
-           required={required}
-           step={step}/>
+          id={id} 
+          name={name}
+          className={`${styles.numberInput}`}
+          {...rest}/>
   )
 }
 
