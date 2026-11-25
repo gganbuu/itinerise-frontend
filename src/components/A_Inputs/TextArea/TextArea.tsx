@@ -1,14 +1,14 @@
 import styles from "./TextArea.module.css"
+import type { ComponentProps } from "react"
 
-interface TextAreaProps {
+interface TextAreaProps extends ComponentProps<'textarea'> {
     id: string,
     name: string,
-    placeholder: string
 }
 
-const TextArea = ({id, name, placeholder}: TextAreaProps) => {
+const TextArea = ({id, name, ...rest}: TextAreaProps) => {
   return (
-    <textarea className={styles.textArea} name={name} id={id} placeholder={placeholder}/>
+    <textarea className={styles.textArea} name={name} id={id} {...rest}/>
   )
 }
 
